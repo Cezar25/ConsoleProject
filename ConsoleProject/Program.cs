@@ -6,7 +6,7 @@ namespace ConsoleProject
     {
         public static void Main(string[] args)
         {
-            Menu.Start();           
+            Menu.Start();          
         }
     }
 }

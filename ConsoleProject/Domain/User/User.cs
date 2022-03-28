@@ -24,5 +24,10 @@ namespace ConsoleProject
             SecurityQuestion = securityQuestion;
             SecurityAnswer = securityAnswer;
         }
+
+        public override string ToString()
+        {
+            return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\n";
+        }
     }
 }
