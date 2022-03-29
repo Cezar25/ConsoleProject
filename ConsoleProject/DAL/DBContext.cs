@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleProject.Domain.Currency;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,11 +17,12 @@ namespace ConsoleProject.Users
                 new User("andrei.ionescu@gmail.com","alabala",25,"ccc222","fish name?","nemo"),
         };
         public static void DisplayUSers()
-        {            
+        {
             foreach (var user in Users)
             {
                 Console.WriteLine(user.ToString());
             }
         }
+        
     }   
 }
