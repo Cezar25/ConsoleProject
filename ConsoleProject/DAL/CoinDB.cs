@@ -13,9 +13,9 @@ namespace ConsoleProject.DAL
             new List<Coin>()
             {
                 //Main currencies
-                new Coin("US dollar","USD"),
-                new Coin("Euro","EUR"),
-                new Coin("Bitcoin","BTC"),
+                new Coin("US dollar","USD",0.85,1,0.000021),
+                new Coin("Euro","EUR",1,1.15,0.000023),
+                new Coin("Bitcoin","BTC",42000,47400,1),
 
                 //Other currencies
                 new Coin("Ethereum","ETH",3074,3370,0.071),
