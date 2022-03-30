@@ -29,7 +29,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of EUR you want to deposit:");
                         double amount = Convert.ToDouble(Console.ReadLine());
-                        user.AddCoins("EUR", amount);
+                        user.AddCoin("EUR", amount);
                         Console.WriteLine("Deposit was succesful!");
 
                         BalanceMenu.Balance(user.Email);
@@ -39,7 +39,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of USD you want to deposit:");
                         double amount = Convert.ToDouble(Console.ReadLine());
-                        user.AddCoins("USD", amount);
+                        user.AddCoin("USD", amount);
                         Console.WriteLine("Deposit was succesful!");
 
                         BalanceMenu.Balance(user.Email);

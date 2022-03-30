@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "yZneln0ajREjG+Zf4JVAF6GKTcnXZPLYoophwtikwr4fYR2nS4xTsQ1vsggErAvD7bRpGpcScJqHiIpt5VgKUA==",
+  "dgSpecHash": "J9plEFXPTkFQ061+DpMHbt2IV3kVicAT+8fL84p8feN4GLQj8RDmypU0+YjCBqnkJVDvYMGZ2Ig8CRJ791lEPQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\cezar.buna\\Desktop\\ConsoleProject\\ConsoleProject\\ConsoleProject.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\cezar.buna\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.14\\microsoft.netcore.app.host.win-x64.5.0.14.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

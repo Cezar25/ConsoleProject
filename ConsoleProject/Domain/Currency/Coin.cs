@@ -28,5 +28,15 @@ namespace ConsoleProject.Domain.Currency
             Name = name;
             Abreviation = abreviation;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Coin coin &&
+                   Name == coin.Name &&
+                   Abreviation == coin.Abreviation &&
+                   ValueInEUR == coin.ValueInEUR &&
+                   ValueInUSD == coin.ValueInUSD &&
+                   ValueInBTC == coin.ValueInBTC;
+        }
     }
 }

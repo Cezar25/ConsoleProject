@@ -12,7 +12,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
     {
         public static void TradeWithApp(User user)
         {
-            //Console.Clear();
+            Console.Clear();
             Console.WriteLine("Welcome to the App Trading page!");
             Console.WriteLine("Here you can exchange currencies from your portofolio directly with the app wallet INSTANTLY!");
             Console.WriteLine();

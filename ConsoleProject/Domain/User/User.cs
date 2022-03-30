@@ -1,5 +1,6 @@
 ﻿using ConsoleProject.DAL;
 using ConsoleProject.Domain.Currency;
+using ConsoleProject.Domain.User;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,11 @@ namespace ConsoleProject
         public string SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
         public bool PrivateProfile { get; set; } = false;
-        public (List<Coin>, List<double>) CoinAmount { get; set; } = new(CoinDB.Coins, new List<double>(new double[CoinDB.Coins.Count]));
-
+        public List<Wallet> Wallets { get; set; } = new List<Wallet>()
+        {
+            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR"),0),
+            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD"),0)
+        };
         public User(string email, string password, int age, string userID, string securityQuestion, string securityAnswer)
         {
             Email = email;
@@ -33,6 +37,32 @@ namespace ConsoleProject
         public User(string email, string password, int age, string userID, string securityQuestion, string securityAnswer, bool privateProfile) : this(email, password, age, userID, securityQuestion, securityAnswer)
         {
             PrivateProfile = privateProfile;
+        }
+
+        public void AddCoin(string coinAbreviation, double amount)
+        {
+            if (Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
+            {
+                Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount += amount;
+            }
+            else
+            {
+                if (CoinDB.Coins.Any(x => x.Abreviation == coinAbreviation))
+                {
+                    Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == coinAbreviation), amount));
+                }
+            }
+        }
+        public void RemoveCoin(string coinAbreviation, double amount)
+        {
+            if (Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
+            {
+                Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount -= amount;
+            }
+            else
+            {
+                Console.WriteLine("Coin could not be removed!");
+            }
         }
 
         public void DisplayPrivacy()
@@ -55,45 +85,24 @@ namespace ConsoleProject
             PrivateProfile = type;
         }
 
-        public void AddCoins(string coinAbreviation, double amount)
-        {
-            
-            if (CoinAmount.Item1.Any(x => x.Abreviation == coinAbreviation))
-            {
-                int foundIndex = CoinAmount.Item1.FindIndex(x => x.Abreviation == coinAbreviation);
-                
-                CoinAmount.Item2[foundIndex] += amount;
-            }
-        }
-
-        public void DeleteCoins(string coinAbreviation,double amount)
-        {
-            if (CoinAmount.Item1.Any(x => x.Abreviation == coinAbreviation))
-            {
-                int foundIndex = CoinAmount.Item1.FindIndex(x => x.Abreviation == coinAbreviation);
-
-                CoinAmount.Item2[foundIndex] -= amount;
-            }
-        }
-
         public void DisplayPortofolio()
         {
-            int index = 0;
-            foreach (var item in CoinAmount.Item1)
+            Console.WriteLine();
+            foreach (var wallet in Wallets)
             {
-                Console.WriteLine($"Coin:  {item.Name}        amount:   {CoinAmount.Item2[index]}");
-                index ++;
+                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {wallet.CoinAmount}");
             }
+            Console.WriteLine();
         }
 
         public void DisplayHiddenPortofolio()
         {
-            int index = 0;
-            foreach (var item in CoinAmount.Item1)
+            Console.WriteLine();
+            foreach (var wallet in Wallets)
             {
-                Console.WriteLine($"Coin:  {item.Name}        amount:   ---");
-                index++;
+                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    ---");
             }
+            Console.WriteLine();
         }
 
         public override string ToString()
