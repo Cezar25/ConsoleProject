@@ -22,7 +22,6 @@ namespace ConsoleProject.Users
             {
                 Console.WriteLine(user.ToString());
             }
-        }
-        
+        }        
     }   
 }

@@ -39,35 +39,9 @@ namespace ConsoleProject
             PrivateProfile = privateProfile;
         }
 
-        public void AddCoin(string coinAbreviation, double amount)
-        {
-            if (Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
-            {
-                Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount += amount;
-            }
-            else
-            {
-                if (CoinDB.Coins.Any(x => x.Abreviation == coinAbreviation))
-                {
-                    Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == coinAbreviation), amount));
-                }
-            }
-        }
-        public void RemoveCoin(string coinAbreviation, double amount)
-        {
-            if (Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
-            {
-                Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount -= amount;
-            }
-            else
-            {
-                Console.WriteLine("Coin could not be removed!");
-            }
-        }
-
         public void DisplayPrivacy()
         {
-            if(PrivateProfile == true)
+            if (PrivateProfile == true)
                 Console.WriteLine("Profile type:   PRIVATE");
             else
                 Console.WriteLine("Profile type:   PUBLIC");

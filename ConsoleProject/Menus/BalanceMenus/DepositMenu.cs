@@ -1,4 +1,5 @@
-﻿using ConsoleProject.Menus.UserInfoMenus;
+﻿using ConsoleProject.BLL;
+using ConsoleProject.Menus.UserInfoMenus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,9 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of EUR you want to deposit:");
                         double amount = Convert.ToDouble(Console.ReadLine());
-                        user.AddCoin("EUR", amount);
+
+                        DepositBusinessLogic.AddCoin(user, "EUR", amount);
+
                         Console.WriteLine("Deposit was succesful!");
 
                         BalanceMenu.Balance(user.Email);
@@ -39,7 +42,9 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of USD you want to deposit:");
                         double amount = Convert.ToDouble(Console.ReadLine());
-                        user.AddCoin("USD", amount);
+
+                        DepositBusinessLogic.AddCoin(user, "USD", amount);
+
                         Console.WriteLine("Deposit was succesful!");
 
                         BalanceMenu.Balance(user.Email);

@@ -1,5 +1,6 @@
 ﻿using ConsoleProject.Menus.AppTradeMenus;
 using ConsoleProject.Menus.BalanceMenus;
+using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -7,20 +8,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject.Menus.UserInfoMenus
+namespace ConsoleProject.StrategyPatterm
 {
-    public class BalanceMenu
+    public class ShownBalanceStrategy : IShowBalanceStrategy
     {
-        public static void Balance(string email) //Show balance (not hidden)
+        public void ShowBalance(string userEmail)
         {
             //Console.Clear();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("BALANCE PAGE");
 
-            if (DBContext.Users.Any(x => x.Email == email))
+            if (DBContext.Users.Any(x => x.Email == userEmail))
             {
-                var balanceOwner = DBContext.Users.Single(x => x.Email == email);
+                var balanceOwner = DBContext.Users.Single(x => x.Email == userEmail);
 
                 Console.WriteLine($"Welcome {balanceOwner.Email}!");
                 Console.WriteLine($"Your total balance amount is ");
@@ -79,18 +80,20 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         }
                     case 3:
                         {
-                            EditProfileMenu.EditProfile(email);
+                            EditProfileMenu.EditProfile(userEmail);
                             break;
                         }
                     case 4:
                         {
-                            HiddenBalanceMenu.HiddenBalance(email);
+                            var context = new ShowBalanceContext();
+                            context.SetStrategy(new HiddenBalanceStrategy());
+                            context.ShowBalance(userEmail);
                             break;
                         }
                     case 5:
                         {
                             balanceOwner.ChangeProfileType(balanceOwner.PrivateProfile);
-                            Balance(email);
+                            ShowBalance(userEmail);
                             break;
                         }
                     case 6:
@@ -107,13 +110,11 @@ namespace ConsoleProject.Menus.UserInfoMenus
                     default:
                         {
                             Console.WriteLine("Wrong choice, please try again!");
-                            Balance(email);
+                            ShowBalance(userEmail);
                             break;
                         }
                 }
             }
-
-
         }
     }
 }

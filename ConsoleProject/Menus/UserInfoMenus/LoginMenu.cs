@@ -1,4 +1,5 @@
-﻿using ConsoleProject.Users;
+﻿using ConsoleProject.StrategyPatterm;
+using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,11 @@ namespace ConsoleProject.Menus.UserInfoMenus
                 if (found.Password == inputPassword)
                 {
                     Console.WriteLine("You have succesfully logged in!");
-                    BalanceMenu.Balance(inputEmail);
+                    //BalanceMenu.Balance(inputEmail);
+
+                    var context = new ShowBalanceContext();
+                    context.SetStrategy(new ShownBalanceStrategy());
+                    context.ShowBalance(inputEmail);
                 }
                 else
                 {
@@ -52,7 +57,10 @@ namespace ConsoleProject.Menus.UserInfoMenus
                                 if (found.SecurityQuestion == inputQuestion && found.SecurityAnswer == inputAnswer)
                                 {
                                     Console.WriteLine("You have succesfully logged in!");
-                                    BalanceMenu.Balance(inputEmail);
+                                    //BalanceMenu.Balance(inputEmail);
+                                    var context = new ShowBalanceContext();
+                                    context.SetStrategy(new ShownBalanceStrategy());
+                                    context.ShowBalance(inputEmail);
                                 }
                                 else
                                 {

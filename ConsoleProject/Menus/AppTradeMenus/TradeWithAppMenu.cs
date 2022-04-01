@@ -1,4 +1,6 @@
-﻿using ConsoleProject.Domain.Currency;
+﻿using ConsoleProject.BLL;
+using ConsoleProject.DAL;
+using ConsoleProject.Domain.Currency;
 using ConsoleProject.Menus.UserInfoMenus;
 using System;
 using System.Collections.Generic;
@@ -18,39 +20,79 @@ namespace ConsoleProject.Menus.AppTradeMenus
             Console.WriteLine();
             Console.WriteLine("Please select the coin you want to SELL!");
 
-            int index = 1;
-            foreach (var coin in user.CoinAmount.Item1)
+            int index = 0;
+
+            foreach (var wallet in user.Wallets)
             {
-                int foundIndex = user.CoinAmount.Item1.IndexOf(coin);
-                if(user.CoinAmount.Item2[foundIndex] > 0)
-                {
-                    Console.WriteLine($"Press {index} to trade {coin.Abreviation}.      (available amount: {user.CoinAmount.Item2[foundIndex]})");
-                    index++;
-                }
+                Console.WriteLine($"Press {index} for {wallet.CoinType.Abreviation}");
+                index++;
             }
 
             int choice = Convert.ToInt32(Console.ReadLine());
 
-            if(choice < 1 || choice > index)
+            if (choice < 0 || choice > index)
             {
                 Console.WriteLine("Wrong choice! Please try again!");
                 TradeWithApp(user);
             }
             else
             {
-                Console.WriteLine($"Please enter the amount of {user.CoinAmount.Item1[choice].Abreviation} you wish to sell:");
-                double amountToBeSold = Convert.ToDouble(Console.ReadLine());
+                Console.WriteLine($"Please type in the amount of {user.Wallets[choice].CoinType.Abreviation} you wish to sell");
+                double sellAmount = Convert.ToDouble(Console.ReadLine());
 
-                if(amountToBeSold > user.CoinAmount.Item2[choice] || amountToBeSold < 0)
+                Console.WriteLine();
+                Console.WriteLine("Please select the coin you with to BUY from the list:");
+
+                int index2 = 0;
+
+                if (user.Wallets[choice].CoinType.Abreviation == "EUR" || user.Wallets[choice].CoinType.Abreviation == "USD" || user.Wallets[choice].CoinType.Abreviation == "BTC")
                 {
-                    Console.WriteLine("Wrong amount! Please try again!");
-                    TradeWithApp(user);
+                    foreach (var coin in CoinDB.Coins)
+                    {
+                        Console.WriteLine($"Press {index2} for {coin.Abreviation}");
+                        index2++;
+                    }
+                    int choice2 = Convert.ToInt32(Console.ReadLine());
+
+                    if (choice2 < 0 || choice2 > index2)
+                    {
+                        Console.WriteLine("Wrong choice! Please try again!");
+                        TradeWithApp(user);
+                    }
+                    else
+                    {
+                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
+                        BalanceMenu.Balance(user.Email);
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Please select the coin you want to BUY!");
+                    foreach (var coin in CoinDB.Coins)
+                    {
+                        if(coin.Abreviation != "EUR" || coin.Abreviation != "USD" || coin.Abreviation != "BTC")
+                        {
+                            Console.WriteLine($"Press {index2} for {coin.Abreviation}");
+                            index2++;
+                        }
+                        
+                    }
+                    int choice2 = Convert.ToInt32(Console.ReadLine());
+
+                    if (choice2 < 0 || choice2 > index2)
+                    {
+                        Console.WriteLine("Wrong choice! Please try again!");
+                        TradeWithApp(user);
+                    }
+                    else
+                    {
+                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
+                        BalanceMenu.Balance(user.Email);
+                    }
                 }
+
             }
         }
+
+
     }
 }

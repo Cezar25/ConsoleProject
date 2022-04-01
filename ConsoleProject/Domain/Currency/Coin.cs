@@ -38,5 +38,9 @@ namespace ConsoleProject.Domain.Currency
                    ValueInUSD == coin.ValueInUSD &&
                    ValueInBTC == coin.ValueInBTC;
         }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

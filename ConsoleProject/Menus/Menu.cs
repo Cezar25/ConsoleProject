@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,8 @@ namespace ConsoleProject
                     }
                     case 1:
                         {
-                            LoginMenu.LoggingIn();
+                            LoginMenu.LoggingIn(); 
+
                             break;
                         }
                     case 2:

@@ -11,12 +11,13 @@ namespace ConsoleProject.Domain.User
     {        
         public Coin CoinType { get; set; }
         public double CoinAmount { get; set; }
+        public Guid WalletID { get; set; } = Guid.NewGuid();
 
         public Wallet(Coin coinType, double coinAmount)
         {
             CoinType = coinType;
             CoinAmount = coinAmount;
-        }
+         }
 
     }
 }
