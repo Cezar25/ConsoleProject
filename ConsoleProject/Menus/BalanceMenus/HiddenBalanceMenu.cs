@@ -1,4 +1,6 @@
-﻿using ConsoleProject.Menus.UserInfoMenus;
+﻿using ConsoleProject.BLL;
+using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                 Console.WriteLine($"Your total balance amount is ---");
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                balanceOwner.DisplayHiddenPortofolio();
+                AccountBusinessLogic.DisplayPrivacy(balanceOwner);
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");
@@ -78,7 +80,9 @@ namespace ConsoleProject.Menus.BalanceMenus
                         }
                     case 4:
                         {
-                            BalanceMenu.Balance(email);
+                            var context = new ShowBalanceContext();
+                            context.SetStrategy(new ShownBalanceStrategy());
+                            context.ShowBalance(email);
                             break;
                         }
                     case 5:

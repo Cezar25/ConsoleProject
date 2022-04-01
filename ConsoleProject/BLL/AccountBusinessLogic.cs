@@ -10,6 +10,12 @@ namespace ConsoleProject.BLL
 {
     public class AccountBusinessLogic
     {
-        
+        public static void DisplayPrivacy(User user)
+        {
+            if (user.PrivateProfile == true)
+                Console.WriteLine("Profile type:   PRIVATE");
+            else
+                Console.WriteLine("Profile type:   PUBLIC");
+        }
     }
 }

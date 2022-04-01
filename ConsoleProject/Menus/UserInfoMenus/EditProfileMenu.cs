@@ -1,4 +1,5 @@
-﻿using ConsoleProject.Users;
+﻿using ConsoleProject.StrategyPatterm;
+using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,14 @@ namespace ConsoleProject.Menus.UserInfoMenus
             //Console.Clear();
             Console.WriteLine();
             Console.WriteLine("PROFILE EDITING PAGE");
+            Console.WriteLine();
+
+            Console.WriteLine("Your current credentials are:");
+            if(DBContext.Users.Any(x => x.Email == email))
+            {
+                var currentUser = DBContext.Users.Single(x => x.Email == email);
+                Console.WriteLine(currentUser.ToString());
+            }
 
             Console.WriteLine("What do you wish to change?");
             Console.WriteLine("Press 1 for changing your email.");

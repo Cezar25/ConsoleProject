@@ -1,4 +1,4 @@
-﻿using ConsoleProject.Menus.AppTradeMenus;
+﻿using ConsoleProject.BLL;
 using ConsoleProject.Menus.BalanceMenus;
 using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.Users;
@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace ConsoleProject.StrategyPatterm
 {
-    public class ShownBalanceStrategy : IShowBalanceStrategy
+    public class HiddenBalanceStrategy : IShowBalanceStrategy
     {
         public void ShowBalance(string userEmail)
         {
-            //Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.Clear();
             Console.WriteLine("BALANCE PAGE");
 
             if (DBContext.Users.Any(x => x.Email == userEmail))
@@ -24,21 +22,19 @@ namespace ConsoleProject.StrategyPatterm
                 var balanceOwner = DBContext.Users.Single(x => x.Email == userEmail);
 
                 Console.WriteLine($"Welcome {balanceOwner.Email}!");
-                Console.WriteLine($"Your total balance amount is ");
-                balanceOwner.DisplayPrivacy();
-
+                Console.WriteLine($"Your total balance amount is ---");
+                AccountBusinessLogic.DisplayPrivacy(balanceOwner);
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                balanceOwner.DisplayPortofolio();
+                balanceOwner.DisplayHiddenPortofolio();
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");
                 Console.WriteLine("Press 2 for withdrawing money.");
                 Console.WriteLine("Press 3 for editing your profile");
-                Console.WriteLine("Press 4 to hide your balance amount.");
+                Console.WriteLine("Press 4 to show your balance amount.");
                 Console.WriteLine("Press 5 to make your profile private/public");
-                Console.WriteLine("Press 6 to trade with the app");
-                Console.WriteLine("Press 7 for logging out");
+                Console.WriteLine("Press 6 for logging out");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
 
@@ -46,35 +42,13 @@ namespace ConsoleProject.StrategyPatterm
                 {
                     case 1:
                         {
-                            Console.Clear();
-                            Console.WriteLine("DEPOSIT PAGE");
-                            Console.WriteLine("Please type in your credit card number:");
-                            string cardNumber = Console.ReadLine();
-                            Console.WriteLine("Please type in your credit card's expiration month(1-12):");
-                            int cardExpirationMonth = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Please type in your credit card's expiration year:");
-                            int cardExpirationYear = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Please type in your credit card's CVV:");
-                            int cardCVV = Convert.ToInt32(Console.ReadLine());
-
-                            DepositMenu.DepositMoney(balanceOwner);
+                            GetCreditCardInfoMenu.GetCreditCardInfo(balanceOwner);
 
                             break;
                         }
                     case 2:
                         {
-                            Console.Clear();
-                            Console.WriteLine("WITHDRAW PAGE");
-                            Console.WriteLine("Please type in your credit card number:");
-                            string cardNumber = Console.ReadLine();
-                            Console.WriteLine("Please type in your credit card's expiration month(1-12):");
-                            int cardExpirationMonth = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Please type in your credit card's expiration year:");
-                            int cardExpirationYear = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Please type in your credit card's CVV:");
-                            int cardCVV = Convert.ToInt32(Console.ReadLine());
-
-                            WithdrawMenu.WithdrawMoney(balanceOwner);
+                            GetBankAccountInfoMenu.GetBankAccountInfo(balanceOwner);
 
                             break;
                         }
@@ -85,8 +59,9 @@ namespace ConsoleProject.StrategyPatterm
                         }
                     case 4:
                         {
+                            //BalanceMenu.Balance(userEmail);
                             var context = new ShowBalanceContext();
-                            context.SetStrategy(new HiddenBalanceStrategy());
+                            context.SetStrategy(new ShownBalanceStrategy());
                             context.ShowBalance(userEmail);
                             break;
                         }
@@ -98,14 +73,10 @@ namespace ConsoleProject.StrategyPatterm
                         }
                     case 6:
                         {
-                            TradeWithAppMenu.TradeWithApp(balanceOwner);
-                            break;
-                        }
-                    case 7:
-                        {
                             Console.WriteLine("Logging out......");
                             Menu.Start();
                             break;
+
                         }
                     default:
                         {

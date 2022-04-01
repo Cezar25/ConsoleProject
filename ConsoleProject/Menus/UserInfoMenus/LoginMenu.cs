@@ -29,9 +29,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
                     Console.WriteLine("You have succesfully logged in!");
                     //BalanceMenu.Balance(inputEmail);
 
-                    var context = new ShowBalanceContext();
-                    context.SetStrategy(new ShownBalanceStrategy());
-                    context.ShowBalance(inputEmail);
+                    BalanceMenu.Balance(inputEmail);
                 }
                 else
                 {
@@ -57,10 +55,8 @@ namespace ConsoleProject.Menus.UserInfoMenus
                                 if (found.SecurityQuestion == inputQuestion && found.SecurityAnswer == inputAnswer)
                                 {
                                     Console.WriteLine("You have succesfully logged in!");
-                                    //BalanceMenu.Balance(inputEmail);
-                                    var context = new ShowBalanceContext();
-                                    context.SetStrategy(new ShownBalanceStrategy());
-                                    context.ShowBalance(inputEmail);
+                                    
+                                    BalanceMenu.Balance(inputEmail);
                                 }
                                 else
                                 {

@@ -1,5 +1,6 @@
 ﻿using ConsoleProject.BLL;
 using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.StrategyPatterm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of EUR you want to withdraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
                         WithdrawBusinessLogic.RemoveCoin(user, "EUR", amount);
-                        Console.WriteLine("Deposit was succesful!");
+                        Console.WriteLine("Withdrawal was succesful!");
 
                         BalanceMenu.Balance(user.Email);
                         break;
@@ -41,7 +42,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of USD you want to withddraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
                         WithdrawBusinessLogic.RemoveCoin(user, "USD", amount);
-                        Console.WriteLine("Deposit was succesful!");
+                        Console.WriteLine("Withdrawal was succesful!");
 
                         BalanceMenu.Balance(user.Email);
                         break;

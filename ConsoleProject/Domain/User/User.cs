@@ -34,19 +34,6 @@ namespace ConsoleProject
             SecurityAnswer = securityAnswer;
         }
 
-        public User(string email, string password, int age, string userID, string securityQuestion, string securityAnswer, bool privateProfile) : this(email, password, age, userID, securityQuestion, securityAnswer)
-        {
-            PrivateProfile = privateProfile;
-        }
-
-        public void DisplayPrivacy()
-        {
-            if (PrivateProfile == true)
-                Console.WriteLine("Profile type:   PRIVATE");
-            else
-                Console.WriteLine("Profile type:   PUBLIC");
-        }
-
         public void ChangeProfileType(bool type)
         {
             Console.WriteLine("Press 1 to make your profile");
@@ -79,6 +66,10 @@ namespace ConsoleProject
             Console.WriteLine();
         }
 
+        public User(string email, string password, int age, string userID, string securityQuestion, string securityAnswer, bool privateProfile) : this(email, password, age, userID, securityQuestion, securityAnswer)
+        {
+            PrivateProfile = privateProfile;
+        }
         public override string ToString()
         {
             return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\n";

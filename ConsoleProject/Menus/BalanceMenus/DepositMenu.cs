@@ -1,5 +1,6 @@
 ﻿using ConsoleProject.BLL;
 using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.StrategyPatterm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,9 @@ namespace ConsoleProject.Menus.BalanceMenus
             {
                 case 0:
                     {
-                        BalanceMenu.Balance(user.Email);
+                        var context = new ShowBalanceContext();
+                        context.SetStrategy(new ShownBalanceStrategy());
+                        context.ShowBalance(user.Email); ;
                         break;
                     }
                 case 1:

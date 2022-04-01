@@ -2,6 +2,7 @@
 using ConsoleProject.DAL;
 using ConsoleProject.Domain.Currency;
 using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.StrategyPatterm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,9 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     else
                     {
                         AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
-                        BalanceMenu.Balance(user.Email);
+                        var context = new ShowBalanceContext();
+                        context.SetStrategy(new ShownBalanceStrategy());
+                        context.ShowBalance(user.Email);
                     }
                 }
                 else
@@ -86,7 +89,9 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     else
                     {
                         AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
-                        BalanceMenu.Balance(user.Email);
+                        var context = new ShowBalanceContext();
+                        context.SetStrategy(new ShownBalanceStrategy());
+                        context.ShowBalance(user.Email);
                     }
                 }
 
