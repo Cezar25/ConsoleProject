@@ -26,7 +26,7 @@ namespace ConsoleProject.StrategyPatterm
                 AccountBusinessLogic.DisplayPrivacy(balanceOwner);
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                balanceOwner.DisplayHiddenPortofolio();
+                AccountBusinessLogic.DisplayHiddenPortofolio(balanceOwner);
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");
@@ -67,7 +67,7 @@ namespace ConsoleProject.StrategyPatterm
                         }
                     case 5:
                         {
-                            balanceOwner.ChangeProfileType(balanceOwner.PrivateProfile);
+                            AccountBusinessLogic.ChangeProfileType(balanceOwner);
                             ShowBalance(userEmail);
                             break;
                         }

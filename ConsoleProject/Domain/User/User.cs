@@ -33,39 +33,6 @@ namespace ConsoleProject
             SecurityQuestion = securityQuestion;
             SecurityAnswer = securityAnswer;
         }
-
-        public void ChangeProfileType(bool type)
-        {
-            Console.WriteLine("Press 1 to make your profile");
-            if (type == false)
-                Console.WriteLine("Public");
-            else
-                Console.WriteLine("Private");
-
-            type = !type;
-            PrivateProfile = type;
-        }
-
-        public void DisplayPortofolio()
-        {
-            Console.WriteLine();
-            foreach (var wallet in Wallets)
-            {
-                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {wallet.CoinAmount}");
-            }
-            Console.WriteLine();
-        }
-
-        public void DisplayHiddenPortofolio()
-        {
-            Console.WriteLine();
-            foreach (var wallet in Wallets)
-            {
-                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    ---");
-            }
-            Console.WriteLine();
-        }
-
         public User(string email, string password, int age, string userID, string securityQuestion, string securityAnswer, bool privateProfile) : this(email, password, age, userID, securityQuestion, securityAnswer)
         {
             PrivateProfile = privateProfile;
