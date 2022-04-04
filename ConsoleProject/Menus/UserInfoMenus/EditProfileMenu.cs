@@ -1,4 +1,5 @@
-﻿using ConsoleProject.StrategyPatterm;
+﻿using ConsoleProject.BLL;
+using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
 {
     public class EditProfileMenu
     {
-        public static void EditProfile(string email)
+        public static void EditProfile(User user)
         {
             //Console.Clear();
             Console.WriteLine();
@@ -18,17 +19,12 @@ namespace ConsoleProject.Menus.UserInfoMenus
             Console.WriteLine();
 
             Console.WriteLine("Your current credentials are:");
-            if(DBContext.Users.Any(x => x.Email == email))
-            {
-                var currentUser = DBContext.Users.Single(x => x.Email == email);
-                Console.WriteLine(currentUser.ToString());
-            }
+            Console.WriteLine(user.ToString());
 
             Console.WriteLine("What do you wish to change?");
             Console.WriteLine("Press 1 for changing your email.");
             Console.WriteLine("Press 2 for changing your password.");
-            Console.WriteLine("Press 3 for changing your user ID.");
-            Console.WriteLine("Press 4 for changing your security question and answer.");
+            Console.WriteLine("Press 3 for changing your security question and answer.");
 
             Console.WriteLine("Press 0 for going back to the Balance page");
 
@@ -37,7 +33,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
             {
                 case 0:
                     {
-                        BalanceMenu.Balance(email);
+                        BalanceMenu.Balance(user.Email);
                         break;
                     }
                 case 1:
@@ -45,17 +41,10 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         Console.WriteLine("Please enter your new email adress:");
                         var newEmail = Console.ReadLine();
 
-                        if (DBContext.Users.Any(x => x.Email == email))
-                        {
-                            var currentUser = DBContext.Users.Single(x => x.Email == email);
-                            currentUser.Email = newEmail;
-                            int foundIndex = DBContext.Users.IndexOf(currentUser);
-
-                            DBContext.Users[foundIndex] = currentUser;
-                        }
+                        AccountBusinessLogic.UpdateUserEmail(user, newEmail);
 
                         Console.WriteLine("Email succesfully changed!");
-                        EditProfile(newEmail);
+                        EditProfile(user);
                         break;
                     }
                 case 2:
@@ -63,38 +52,13 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         Console.WriteLine("Please enter your new email password:");
                         var newPassword = Console.ReadLine();
 
-                        if (DBContext.Users.Any(x => x.Email == email))
-                        {
-                            var currentUser = DBContext.Users.Single(x => x.Email == email);
-                            currentUser.Password = newPassword;
-                            int foundIndex = DBContext.Users.IndexOf(currentUser);
-
-                            DBContext.Users[foundIndex] = currentUser;
-                        }
+                        AccountBusinessLogic.UpdateUserPassword(user, newPassword);
 
                         Console.WriteLine("Password succesfully changed!");
-                        EditProfile(email);
+                        EditProfile(user);
                         break;
                     }
                 case 3:
-                    {
-                        Console.WriteLine("Please enter your new user ID:");
-                        var newUserID = Console.ReadLine();
-
-                        if (DBContext.Users.Any(x => x.Email == email))
-                        {
-                            var currentUser = DBContext.Users.Single(x => x.Email == email);
-                            currentUser.UserID = newUserID;
-                            int foundIndex = DBContext.Users.IndexOf(currentUser);
-
-                            DBContext.Users[foundIndex] = currentUser;
-                        }
-
-                        Console.WriteLine("User ID succesfully changed!");
-                        EditProfile(email);
-                        break;
-                    }
-                case 4:
                     {
                         Console.WriteLine("Please enter your new security question:");
                         var newQuestion = Console.ReadLine();
@@ -102,28 +66,22 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         Console.WriteLine("Please enter your new security answer:");
                         var newAnswer = Console.ReadLine();
 
-                        if (DBContext.Users.Any(x => x.Email == email))
-                        {
-                            var currentUser = DBContext.Users.Single(x => x.Email == email);
-                            currentUser.SecurityQuestion = newQuestion;
-                            currentUser.SecurityAnswer = newAnswer;
-                            int foundIndex = DBContext.Users.IndexOf(currentUser);
-
-                            DBContext.Users[foundIndex] = currentUser;
-                        }
+                        AccountBusinessLogic.UpdateUserQnA(user, newQuestion, newAnswer);
 
                         Console.WriteLine("Security question and answer succesfully changed!");
-                        EditProfile(email);
+                        EditProfile(user);
                         break;
                     }
 
                 default:
                     {
                         Console.WriteLine("Wrong choice, please try again!");
-                        EditProfile(email);
+                        EditProfile(user);
                         break;
                     }
             }
+
+
         }
     }
 }

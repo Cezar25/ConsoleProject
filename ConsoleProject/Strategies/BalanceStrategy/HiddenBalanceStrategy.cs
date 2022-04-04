@@ -54,7 +54,7 @@ namespace ConsoleProject.StrategyPatterm
                         }
                     case 3:
                         {
-                            EditProfileMenu.EditProfile(userEmail);
+                            EditProfileMenu.EditProfile(balanceOwner);
                             break;
                         }
                     case 4:

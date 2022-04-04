@@ -46,5 +46,18 @@ namespace ConsoleProject.BLL
             }
             Console.WriteLine();
         }
+        public static void UpdateUserEmail(User user, string email)
+        {
+            user.Email = email;
+        }
+        public static void UpdateUserPassword(User user, string password)
+        {
+            user.Password = password;
+        }
+        public static void UpdateUserQnA(User user, string question, string answer)
+        {
+            user.SecurityQuestion = question;
+            user.SecurityAnswer = answer;
+        }
     }
 }
