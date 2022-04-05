@@ -10,30 +10,62 @@ namespace ConsoleProject.BLL
 {
     public  class AppTradeBusinessLogic
     {
+        //public static void ConvertCoinToCoin(User user, Wallet wallet, double amountOfCoinSold, string boughtCoinAbreviation)
+        //{
+        //    if (amountOfCoinSold > wallet.CoinAmount)
+        //    {
+        //        Console.WriteLine("Amount selected is greater than the amount available!");
+        //        return;
+        //    }
+        //    double soldAmountInBTC = wallet.CoinType.ValueInBTC * amountOfCoinSold;
+
+        //    if (user.Wallets.Any(x => x.CoinType.Abreviation == boughtCoinAbreviation))
+        //    {
+        //        double amountOfCoinBought = soldAmountInBTC * user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInBTC;
+        //        user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinAmount += amountOfCoinBought;
+        //    }
+        //    else
+        //    {
+        //        if (CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
+        //        {
+        //            double amountOfCoinBought = soldAmountInBTC * CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInBTC;
+        //            user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation), amountOfCoinBought));
+        //        }
+        //    }
+        //    wallet.CoinAmount -= amountOfCoinSold;
+        //}
+        public static Guid GetIDByAbvreviation(string coinAbreviation)
+        {
+            return new Guid();
+        }
         public static void ConvertCoinToCoin(User user, Wallet wallet, double amountOfCoinSold, string boughtCoinAbreviation)
         {
-            if (amountOfCoinSold > wallet.CoinAmount)
+            amountOfCoinSold = Math.Round(amountOfCoinSold,3);
+            if(amountOfCoinSold > wallet.CoinAmount)
             {
                 Console.WriteLine("Amount selected is greater than the amount available!");
                 return;
             }
-            double soldAmountInBTC = wallet.CoinType.ValueInBTC * amountOfCoinSold;
+
+            double amountOfCoinSoldInEUR = amountOfCoinSold * wallet.CoinType.ValueInEUR;
 
             if (user.Wallets.Any(x => x.CoinType.Abreviation == boughtCoinAbreviation))
             {
-                double amountOfCoinBought = soldAmountInBTC * user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInBTC;
+                double amountOfCoinBought = amountOfCoinSoldInEUR / user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInEUR;
                 user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinAmount += amountOfCoinBought;
             }
             else
             {
-                if (CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
+                if(CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
                 {
-                    double amountOfCoinBought = soldAmountInBTC * CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInBTC;
+                    double amountOfCoinBought = amountOfCoinSoldInEUR / CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
                     user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation), amountOfCoinBought));
                 }
             }
+
             wallet.CoinAmount -= amountOfCoinSold;
-        }   
+
+        }
         
     }
 }

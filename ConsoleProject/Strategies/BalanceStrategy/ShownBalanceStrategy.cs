@@ -25,7 +25,7 @@ namespace ConsoleProject.StrategyPatterm
                 var balanceOwner = DBContext.Users.Single(x => x.Email == userEmail);
 
                 Console.WriteLine($"Welcome {balanceOwner.Email}!");
-                Console.WriteLine($"Your total balance amount is:    {UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(balanceOwner)} EUR");
+                Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(balanceOwner), 3)} EUR");
                 AccountBusinessLogic.DisplayPrivacy(balanceOwner);
 
                 Console.WriteLine();

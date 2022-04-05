@@ -32,7 +32,7 @@ namespace ConsoleProject.BLL
             Console.WriteLine();
             foreach (var wallet in user.Wallets)
             {
-                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {wallet.CoinAmount}");
+                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {Math.Round(wallet.CoinAmount, 6)}");
             }
             Console.WriteLine();
         }

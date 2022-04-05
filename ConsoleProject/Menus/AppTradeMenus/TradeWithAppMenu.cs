@@ -72,12 +72,12 @@ namespace ConsoleProject.Menus.AppTradeMenus
                 {
                     foreach (var coin in CoinDB.Coins)
                     {
-                        if(coin.Abreviation != "EUR" || coin.Abreviation != "USD" || coin.Abreviation != "BTC")
+                        if (coin.Abreviation != "EUR" || coin.Abreviation != "USD" || coin.Abreviation != "BTC")
                         {
                             Console.WriteLine($"Press {index2} for {coin.Abreviation}");
                             index2++;
                         }
-                        
+
                     }
                     int choice2 = Convert.ToInt32(Console.ReadLine());
 
@@ -97,6 +97,63 @@ namespace ConsoleProject.Menus.AppTradeMenus
 
             }
         }
+
+        //public static void TradeWithApp(User user)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("Welcome to the App Trading page!");
+        //    Console.WriteLine("Here you can exchange currencies from your portofolio directly with the app wallet INSTANTLY!");
+        //    Console.WriteLine();
+        //    Console.WriteLine("Please select the coin you want to SELL!");
+
+        //    int soldIndex = 0;
+        //    foreach (var wallet in user.Wallets)
+        //    {
+        //        Console.WriteLine($"Press {soldIndex } for {wallet.CoinType.Abreviation}");
+        //        soldIndex++;
+        //    }
+
+        //    int soldChoice = Convert.ToInt32(Console.ReadLine());
+
+        //    if(soldChoice < 0 || soldChoice > soldIndex)
+        //    {
+        //        Console.WriteLine("Wrong choice! Please try again!");
+        //        TradeWithApp(user);
+        //    }
+        //    else
+        //    {
+        //        string soldAbreviation = user.Wallets[soldChoice].CoinType.Abreviation;
+        //        Console.WriteLine($"Type in the amount of {soldAbreviation} you want to sell:    (available amount: {Math.Round(user.Wallets[soldChoice].CoinAmount, 6)})  ");
+
+        //        double soldAmount = Convert.ToDouble(Console.ReadLine());
+
+        //        Console.WriteLine("Please select the coin you wish to BUY!");
+
+        //        if(soldAbreviation == "EUR" || soldAbreviation == "USD" || soldAbreviation == "BTC")
+        //        {
+        //            int boughtIndex = 0;
+        //            foreach(var coin in CoinDB.Coins)
+        //            {
+        //                Console.WriteLine($"Press {boughtIndex} for {coin.Abreviation}");
+        //                boughtIndex++;
+        //            }
+
+        //            int boughtChoice = Convert.ToInt32(Console.ReadLine());
+
+        //            if(boughtChoice < 0 || boughtChoice > boughtIndex)
+        //            {
+        //                Console.WriteLine("Wrong choice! Please try again!");
+        //                TradeWithApp(user);
+        //            }
+        //            else
+        //            {
+        //                string boughtAbreviation = CoinDB.Coins[]
+        //                Console.WriteLine($"Type in the amount of {}");
+        //            }
+        //        }
+
+        //    }
+        //}
 
 
     }

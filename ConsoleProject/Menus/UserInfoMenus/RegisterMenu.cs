@@ -24,16 +24,13 @@ namespace ConsoleProject.Menus.UserInfoMenus
             Console.WriteLine("Please type in your age:");
             int inputAge = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Please type in your USer ID:");
-            string inputUserID = Console.ReadLine();
-
             Console.WriteLine("Please type in your security question:");
             string inputQuestion = Console.ReadLine();
 
             Console.WriteLine("Please type in your security question answer:");
             string inputAnswer = Console.ReadLine();
 
-            DBContext.Users.Add(new User(inputEmail, inputPassword, inputAge, inputUserID, inputQuestion, inputAnswer));
+            DBContext.Users.Add(new User(inputEmail, inputPassword, inputAge, inputQuestion, inputAnswer));
 
             Console.WriteLine("You have succesfully registered!");
             //DBContext.DisplayUSers();
