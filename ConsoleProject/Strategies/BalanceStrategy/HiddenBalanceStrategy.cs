@@ -26,7 +26,7 @@ namespace ConsoleProject.StrategyPatterm
                 AccountBusinessLogic.DisplayPrivacy(balanceOwner);
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                AccountBusinessLogic.DisplayHiddenPortofolio(balanceOwner);
+                UserPortofolioBusinessLogic.DisplayHiddenPortofolio(balanceOwner);
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");

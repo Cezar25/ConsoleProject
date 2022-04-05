@@ -13,6 +13,7 @@ namespace ConsoleProject.Domain.Currency
         public double ValueInEUR { get; set; }
         public double ValueInUSD { get; set; }
         public double ValueInBTC { get; set; }
+        public Guid CoinID { get; set; } = Guid.NewGuid();
 
         public Coin(string name,string abreviation, double valueInEUR, double valueInUSD, double valueInBTC)
         {

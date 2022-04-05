@@ -10,34 +10,6 @@ namespace ConsoleProject.BLL
 {
     public  class AppTradeBusinessLogic
     {
-        //public static void ConvertCoinToCoin(User user, Wallet wallet, double amountOfCoinSold, string boughtCoinAbreviation)
-        //{
-        //    if (amountOfCoinSold > wallet.CoinAmount)
-        //    {
-        //        Console.WriteLine("Amount selected is greater than the amount available!");
-        //        return;
-        //    }
-        //    double soldAmountInBTC = wallet.CoinType.ValueInBTC * amountOfCoinSold;
-
-        //    if (user.Wallets.Any(x => x.CoinType.Abreviation == boughtCoinAbreviation))
-        //    {
-        //        double amountOfCoinBought = soldAmountInBTC * user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInBTC;
-        //        user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinAmount += amountOfCoinBought;
-        //    }
-        //    else
-        //    {
-        //        if (CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
-        //        {
-        //            double amountOfCoinBought = soldAmountInBTC * CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInBTC;
-        //            user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation), amountOfCoinBought));
-        //        }
-        //    }
-        //    wallet.CoinAmount -= amountOfCoinSold;
-        //}
-        public static Guid GetIDByAbvreviation(string coinAbreviation)
-        {
-            return new Guid();
-        }
         public static void ConvertCoinToCoin(User user, Wallet wallet, double amountOfCoinSold, string boughtCoinAbreviation)
         {
             amountOfCoinSold = Math.Round(amountOfCoinSold,3);
@@ -66,6 +38,26 @@ namespace ConsoleProject.BLL
             wallet.CoinAmount -= amountOfCoinSold;
 
         }
-        
+        public static double GetBoughtCoinAmount(double soldCoinAmount, string soldCoinAbreviation, string boughtCoinAbreviation)
+        {
+            if(CoinDB.Coins.Any(x => x.Abreviation == soldCoinAbreviation) && CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
+            {
+                return (CoinDB.Coins.Single(x => x.Abreviation == soldCoinAbreviation).ValueInEUR * soldCoinAmount) / CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
+            }
+            return 0;
+        }
+        public static void GetConversionRate(string soldCoinAbreviation, string boughtCoinAbreviation)
+        {
+            if (CoinDB.Coins.Any(x => x.Abreviation == soldCoinAbreviation) && CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
+            {
+                double rate = CoinDB.Coins.Single(x => x.Abreviation == soldCoinAbreviation).ValueInEUR / CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
+                Console.WriteLine($"1 {soldCoinAbreviation}  =  {Math.Round(rate, 6)} {boughtCoinAbreviation}");
+            }
+        }
+        public static Guid GetIDByAbvreviation(string coinAbreviation)
+        {
+            return new Guid();
+        }
+
     }
 }

@@ -25,7 +25,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
 
             foreach (var wallet in user.Wallets)
             {
-                Console.WriteLine($"Press {index} for {wallet.CoinType.Abreviation}");
+                Console.WriteLine($"Press {index} for {wallet.CoinType.Abreviation}      (available amount: {wallet.CoinAmount})");
                 index++;
             }
 
@@ -62,10 +62,8 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     }
                     else
                     {
-                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
-                        var context = new ShowBalanceContext();
-                        context.SetStrategy(new ShownBalanceStrategy());
-                        context.ShowBalance(user.Email);
+                        ShowTradeOffer(user, user.Wallets[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, user.Wallets[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
+                        
                     }
                 }
                 else
@@ -88,72 +86,68 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     }
                     else
                     {
-                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice], sellAmount, CoinDB.Coins[choice2].Abreviation);
-                        var context = new ShowBalanceContext();
-                        context.SetStrategy(new ShownBalanceStrategy());
-                        context.ShowBalance(user.Email);
+                        ShowTradeOffer(user, user.Wallets[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, user.Wallets[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
                     }
                 }
 
             }
         }
 
-        //public static void TradeWithApp(User user)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Welcome to the App Trading page!");
-        //    Console.WriteLine("Here you can exchange currencies from your portofolio directly with the app wallet INSTANTLY!");
-        //    Console.WriteLine();
-        //    Console.WriteLine("Please select the coin you want to SELL!");
+        public static void ShowTradeOffer(User user, string soldCoinAbreviation, double soldCoinAmount, string boughtCoinAbreviation, double boughtCoinAmount, int choice1, int choice2)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Your trade offer is: ");
+            Console.WriteLine($"{soldCoinAmount }  {soldCoinAbreviation} for {Math.Round(boughtCoinAmount,6)}  {boughtCoinAbreviation}");
+            AppTradeBusinessLogic.GetConversionRate(soldCoinAbreviation,boughtCoinAbreviation);
 
-        //    int soldIndex = 0;
-        //    foreach (var wallet in user.Wallets)
-        //    {
-        //        Console.WriteLine($"Press {soldIndex } for {wallet.CoinType.Abreviation}");
-        //        soldIndex++;
-        //    }
+            Console.WriteLine();
+            Console.WriteLine("Press 1 to ACCEPT the trade offer.");
+            Console.WriteLine("Press 2 to DENY the trade offer.");
+            Console.WriteLine("Press 0 to go back to the BALANCE page.");
 
-        //    int soldChoice = Convert.ToInt32(Console.ReadLine());
+            //int duration = 15;
+            //for(int i= duration; i >= 0; i--)
+            //{
+            //    Console.WriteLine($"\rYou have {i} seconds to ACCEPT the trade!");               
+            //    System.Threading.Thread.Sleep(1000);
+            //}
 
-        //    if(soldChoice < 0 || soldChoice > soldIndex)
-        //    {
-        //        Console.WriteLine("Wrong choice! Please try again!");
-        //        TradeWithApp(user);
-        //    }
-        //    else
-        //    {
-        //        string soldAbreviation = user.Wallets[soldChoice].CoinType.Abreviation;
-        //        Console.WriteLine($"Type in the amount of {soldAbreviation} you want to sell:    (available amount: {Math.Round(user.Wallets[soldChoice].CoinAmount, 6)})  ");
+            var context = new ShowBalanceContext();
+            context.SetStrategy(new ShownBalanceStrategy());
 
-        //        double soldAmount = Convert.ToDouble(Console.ReadLine());
+            int choice = Convert.ToInt32(Console.ReadLine());
 
-        //        Console.WriteLine("Please select the coin you wish to BUY!");
+            switch (choice)
+            {
+                case 0:
+                    {
+                        Console.WriteLine("Returning to BAlANCE page...");
+                        
+                        context.ShowBalance(user.Email);
+                        break;
+                    }
+                case 1:
+                    {
+                        Console.WriteLine("Trade accepted! Proceding with the trade...");
+                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice1], soldCoinAmount, boughtCoinAbreviation);
 
-        //        if(soldAbreviation == "EUR" || soldAbreviation == "USD" || soldAbreviation == "BTC")
-        //        {
-        //            int boughtIndex = 0;
-        //            foreach(var coin in CoinDB.Coins)
-        //            {
-        //                Console.WriteLine($"Press {boughtIndex} for {coin.Abreviation}");
-        //                boughtIndex++;
-        //            }
-
-        //            int boughtChoice = Convert.ToInt32(Console.ReadLine());
-
-        //            if(boughtChoice < 0 || boughtChoice > boughtIndex)
-        //            {
-        //                Console.WriteLine("Wrong choice! Please try again!");
-        //                TradeWithApp(user);
-        //            }
-        //            else
-        //            {
-        //                string boughtAbreviation = CoinDB.Coins[]
-        //                Console.WriteLine($"Type in the amount of {}");
-        //            }
-        //        }
-
-        //    }
-        //}
+                        context.ShowBalance(user.Email);
+                        break;
+                    }
+                case 2:
+                    {
+                        Console.WriteLine("Trade cancelled! Returning to BALANCE page....");
+                        context.ShowBalance(user.Email);
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Wrong choice! Please try again!");
+                        ShowTradeOffer(user, soldCoinAbreviation, soldCoinAmount, boughtCoinAbreviation, boughtCoinAmount, choice1, choice2);
+                        break;
+                    }
+            }
+        }
 
 
     }

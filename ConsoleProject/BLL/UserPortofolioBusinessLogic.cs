@@ -35,5 +35,24 @@ namespace ConsoleProject.BLL
             }
             return total;
         }
+        public static void DisplayPortofolio(User user)
+        {
+            Console.WriteLine();
+            foreach (var wallet in user.Wallets)
+            {
+                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {Math.Round(wallet.CoinAmount, 6)}");
+            }
+            Console.WriteLine();
+        }
+
+        public static void DisplayHiddenPortofolio(User user)
+        {
+            Console.WriteLine();
+            foreach (var wallet in user.Wallets)
+            {
+                Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    ---");
+            }
+            Console.WriteLine();
+        }
     }
 }
