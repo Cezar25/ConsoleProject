@@ -1,4 +1,5 @@
-﻿using ConsoleProject.StrategyPatterm;
+﻿using ConsoleProject.Domain;
+using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;

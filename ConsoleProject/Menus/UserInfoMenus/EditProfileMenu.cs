@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.BLL;
+using ConsoleProject.Domain;
 using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
 using System;

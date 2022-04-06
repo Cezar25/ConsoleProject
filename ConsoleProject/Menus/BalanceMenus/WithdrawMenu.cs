@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.BLL;
+using ConsoleProject.Domain;
 using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.StrategyPatterm;
 using System;
@@ -31,6 +32,13 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of EUR you want to withdraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
+
+                        if(InputValidationBusinessLogic.ValidateIntOrDouble(amount) || amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
+                        {
+                            Console.WriteLine("Wrong input! Please try again!");
+                            WithdrawMoney(user);
+                        }
+
                         WithdrawBusinessLogic.RemoveCoin(user, "EUR", amount);
                         Console.WriteLine("Withdrawal was succesful!");
 
@@ -41,6 +49,13 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         Console.WriteLine("Please enter the amount(double) of USD you want to withddraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
+
+                        if (InputValidationBusinessLogic.ValidateIntOrDouble(amount) || amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
+                        {
+                            Console.WriteLine("Wrong input! Please try again!");
+                            WithdrawMoney(user);
+                        }
+
                         WithdrawBusinessLogic.RemoveCoin(user, "USD", amount);
                         Console.WriteLine("Withdrawal was succesful!");
 

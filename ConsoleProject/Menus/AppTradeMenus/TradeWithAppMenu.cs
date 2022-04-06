@@ -1,6 +1,6 @@
 ﻿using ConsoleProject.BLL;
 using ConsoleProject.DAL;
-using ConsoleProject.Domain.Currency;
+using ConsoleProject.Domain;
 using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.StrategyPatterm;
 using System;
@@ -98,7 +98,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
             Console.WriteLine();
             Console.WriteLine("Your trade offer is: ");
             Console.WriteLine($"{soldCoinAmount }  {soldCoinAbreviation} for {Math.Round(boughtCoinAmount,6)}  {boughtCoinAbreviation}");
-            AppTradeBusinessLogic.GetConversionRate(soldCoinAbreviation,boughtCoinAbreviation);
+            AppTradeBusinessLogic.GetConversionRate(soldCoinAbreviation, boughtCoinAbreviation);
 
             Console.WriteLine();
             Console.WriteLine("Press 1 to ACCEPT the trade offer.");

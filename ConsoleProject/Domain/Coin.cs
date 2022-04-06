@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject.Domain.Currency
+namespace ConsoleProject.Domain
 {
     public class Coin
     {

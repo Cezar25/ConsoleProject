@@ -1,6 +1,5 @@
 ﻿using ConsoleProject.DAL;
-using ConsoleProject.Domain.Currency;
-using ConsoleProject.Domain.User;
+using ConsoleProject.Domain;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleProject
+namespace ConsoleProject.Domain
 {
     public class User
     {
@@ -24,6 +23,7 @@ namespace ConsoleProject
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR"),0),
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD"),0)
         };
+        public List<TradeOffer> Offers { get; set; } = new List<TradeOffer>();
         public User(string email, string password, int age, string securityQuestion, string securityAnswer)
         {
             Email = email;
@@ -38,7 +38,7 @@ namespace ConsoleProject
         }
         public override string ToString()
         {
-            return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\n";
+            return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\nPrivate profile:{PrivateProfile}\n";
         }
     }
 }

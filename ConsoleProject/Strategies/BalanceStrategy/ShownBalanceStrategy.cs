@@ -2,6 +2,7 @@
 using ConsoleProject.Menus.AppTradeMenus;
 using ConsoleProject.Menus.BalanceMenus;
 using ConsoleProject.Menus.UserInfoMenus;
+using ConsoleProject.Menus.UserToUserTradeMenus;
 using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
@@ -39,7 +40,9 @@ namespace ConsoleProject.StrategyPatterm
                 Console.WriteLine("Press 4 to hide your balance amount.");
                 Console.WriteLine("Press 5 to make your profile private/public");
                 Console.WriteLine("Press 6 to trade with the app");
-                Console.WriteLine("Press 7 for logging out");
+                Console.WriteLine("Press 7 to search for another user");
+                Console.WriteLine("Press 8 view notifications");
+                Console.WriteLine("Press 9 for logging out");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
 
@@ -82,6 +85,16 @@ namespace ConsoleProject.StrategyPatterm
                             break;
                         }
                     case 7:
+                        {
+                            SearchForUserMenu.SearchForOtherUser(balanceOwner);
+                            break;
+                        }
+                    case 8:
+                        {
+                            NotificationsMenu.ShowNotifications(balanceOwner);
+                            break;
+                        }
+                    case 9:
                         {
                             Console.WriteLine("Logging out......");
                             Menu.Start();

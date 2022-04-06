@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.BLL;
+using ConsoleProject.Domain;
 using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.StrategyPatterm;
 using System;
@@ -34,11 +35,21 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of EUR you want to deposit:");
                         double amount = Convert.ToDouble(Console.ReadLine());
 
-                        DepositBusinessLogic.AddCoin(user, "EUR", amount);
+                        if (InputValidationBusinessLogic.ValidateIntOrDouble(amount))
+                        {
+                            DepositBusinessLogic.AddCoin(user, "EUR", amount);
 
-                        Console.WriteLine("Deposit was succesful!");
+                            Console.WriteLine("Deposit was succesful!");
 
-                        BalanceMenu.Balance(user.Email);
+                            BalanceMenu.Balance(user.Email);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input! Please try again!");
+                            DepositMoney(user);
+                        }
+
+                        
                         break;
                     }
                 case 2:

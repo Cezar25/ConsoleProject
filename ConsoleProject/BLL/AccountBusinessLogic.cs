@@ -1,5 +1,5 @@
 ﻿using ConsoleProject.DAL;
-using ConsoleProject.Domain.User;
+using ConsoleProject.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;

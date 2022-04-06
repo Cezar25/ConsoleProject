@@ -1,4 +1,4 @@
-﻿using ConsoleProject.Domain.Currency;
+﻿using ConsoleProject.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +13,8 @@ namespace ConsoleProject.Users
         new List<User>() {
                 new User("1","1",1,"1","1"),
                 new User("cezar.buna25@gmail.com","cacamaca",20,"dog name?","snowy"),
-                new User("andi.popescu@yahoo.com","tralala",30,"cat name?","freckles"),
-                new User("andrei.ionescu@gmail.com","alabala",25,"fish name?","nemo"),
+                new User("2","tralala",30,"cat name?","freckles", true),
+                new User("3","3",25,"fish name?","nemo"),
         };
         public static void DisplayUSers()
         {
