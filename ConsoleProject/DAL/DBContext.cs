@@ -15,6 +15,9 @@ namespace ConsoleProject.Users
                 new User("cezar.buna25@gmail.com","cacamaca",20,"dog name?","snowy"),
                 new User("2","tralala",30,"cat name?","freckles", true),
                 new User("3","3",25,"fish name?","nemo"),
+                new User("paul.popescu@yahoo.com","asdrwerw",30,"?","!"),
+                new User("andrei.ionescu@gmail.com","eweoriwer",21,"yes?","no",true)
+
         };
         public static void DisplayUSers()
         {

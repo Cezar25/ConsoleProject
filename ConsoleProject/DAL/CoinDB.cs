@@ -22,7 +22,9 @@ namespace ConsoleProject.DAL
                 new Coin("Cardano","ADA",1.13,1.24,0.000026),
                 new Coin("Solana","SOL",100,111,0.0037),
                 new Coin("Sandbox","SAND",3.13,3.61,0.00007),
-                new Coin("Dogecoin","DOGE",0.14,0.16,0.0000032)
+                new Coin("Dogecoin","DOGE",0.14,0.16,0.0000032),
+                new Coin("BinanceCoin", "BNB", 393.7, 427.6, 0.1),
+                new Coin("Ripple", "XRP", 0.7, 0.77, 0.000018)
             };
     }
 }
