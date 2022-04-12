@@ -33,7 +33,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of EUR you want to withdraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
 
-                        if(InputValidationBusinessLogic.ValidateIntOrDouble(amount) || amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
+                        if(amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
                         {
                             Console.WriteLine("Wrong input! Please try again!");
                             WithdrawMoney(user);
@@ -50,7 +50,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of USD you want to withddraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
 
-                        if (InputValidationBusinessLogic.ValidateIntOrDouble(amount) || amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
+                        if (amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
                         {
                             Console.WriteLine("Wrong input! Please try again!");
                             WithdrawMoney(user);

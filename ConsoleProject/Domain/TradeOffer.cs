@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConsoleProject.DAL;
+using ConsoleProject.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +10,32 @@ namespace ConsoleProject.Domain
 {
     public class TradeOffer
     {
+        public Guid TradeOfferID { get; set; } = Guid.NewGuid();
         public User Sender { get; set; }
         public User Recipient { get; set; }
         public Coin SentCoin { get; set; }
         public double SentAmount { get; set; }
         public Coin ReceivedCoin { get; set; }
         public double ReceivedAmount { get; set; }
-        public Guid SenderID { get; set; } = Guid.NewGuid();
-        public Guid RecipientID { get; set; } = Guid.NewGuid();
+        public Guid SenderID { get; set; } 
+        public Guid RecipientID { get; set; }
+        public Guid SentCoinID { get; set; }
+        public Guid ReceivedCoinID { get; set; }
 
-        public TradeOffer(User sender, User recipient, Coin sentCoin, double sentAmount, Coin receivedCoin, double receivedAmount)
+        public TradeOffer(Guid senderID, Guid recipientID, Guid sentCoinID, double sentAmount, Guid receivedCoinID, double receivedAmount)
         {
-            Sender = sender;
-            Recipient = recipient;
-            SentCoin = sentCoin;
+            SenderID = senderID;
+            Sender = DBContext.Users.SingleOrDefault(x => x.UserID == senderID);
+
+            RecipientID = recipientID;
+            Recipient = DBContext.Users.SingleOrDefault(x => x.UserID == recipientID);
+
+            SentCoinID = sentCoinID;
+            SentCoin = CoinDB.Coins.SingleOrDefault(x => x.CoinID == sentCoinID);
+
             SentAmount = sentAmount;
-            ReceivedCoin = receivedCoin;
+            ReceivedCoinID = receivedCoinID;
+            ReceivedCoin = CoinDB.Coins.SingleOrDefault(x => x.CoinID == receivedCoinID);
             ReceivedAmount = receivedAmount;
         }
 

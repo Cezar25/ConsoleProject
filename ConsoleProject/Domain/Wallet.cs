@@ -1,4 +1,5 @@
-﻿using ConsoleProject.Domain;
+﻿using ConsoleProject.DAL;
+using ConsoleProject.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,18 @@ using System.Threading.Tasks;
 namespace ConsoleProject.Domain
 {
     public class Wallet
-    {        
+    {
         public Coin CoinType { get; set; }
         public double CoinAmount { get; set; }
         public Guid WalletID { get; set; } = Guid.NewGuid();
-        public User WalletOwner { get; set; } 
+        public Guid CoinID { get; set; }
 
-        public Wallet(Coin coinType, double coinAmount)
+        public Wallet(Guid coinID, double coinAmount)
         {
-            CoinType = coinType;
+            CoinID = coinID;
+            CoinType = CoinDB.Coins.FirstOrDefault(x => x.CoinID == coinID);
             CoinAmount = coinAmount;
         }
+        
     }
 }

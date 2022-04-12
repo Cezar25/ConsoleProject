@@ -18,7 +18,7 @@ namespace TestConsoleApp
         {
             // Arrange
             User user = DBContext.Users[0];
-            user.Wallets.Add(new Wallet(CoinDB.Coins[2], 5));
+            user.Wallets.Add(new Wallet(CoinDB.Coins[2].CoinID, 5));
 
             double expected = 0;
 
@@ -35,7 +35,7 @@ namespace TestConsoleApp
         {
             // Arrange
             User user = DBContext.Users[1];
-            user.Wallets.Add(new Wallet(CoinDB.Coins[2], 4));
+            user.Wallets.Add(new Wallet(CoinDB.Coins[2].CoinID, 4));
 
             double expected = 0;
 

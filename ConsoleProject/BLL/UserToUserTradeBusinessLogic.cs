@@ -21,7 +21,7 @@ namespace ConsoleProject.BLL
             }
             else if ( !offer.Sender.Wallets.Any(x => x.CoinType == offer.ReceivedCoin) && offer.Recipient.Wallets.Any(x => x.CoinType == offer.SentCoin))
             {
-                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin, offer.ReceivedAmount));
+                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin.CoinID, offer.ReceivedAmount));
                 offer.Recipient.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount += offer.SentAmount;
 
                 offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
@@ -30,15 +30,15 @@ namespace ConsoleProject.BLL
             else if (offer.Sender.Wallets.Any(x => x.CoinType == offer.ReceivedCoin) && !offer.Recipient.Wallets.Any(x => x.CoinType == offer.SentCoin))
             {
                 offer.Sender.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount += offer.ReceivedAmount;
-                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin, offer.SentAmount));
+                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin.CoinID, offer.SentAmount));
 
                 offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
                 offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
             }
             else
             {
-                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin, offer.ReceivedAmount));
-                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin, offer.SentAmount));
+                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin.CoinID, offer.ReceivedAmount));
+                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin.CoinID, offer.SentAmount));
 
                 offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
                 offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;

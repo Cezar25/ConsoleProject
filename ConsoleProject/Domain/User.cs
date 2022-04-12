@@ -20,10 +20,10 @@ namespace ConsoleProject.Domain
         public bool PrivateProfile { get; set; } = false;
         public List<Wallet> Wallets { get; set; } = new List<Wallet>()
         {
-            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR"),0),
-            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD"),0)
+            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR").CoinID,0),
+            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD").CoinID,0)
         };
-        public List<TradeOffer> Offers { get; set; } = new List<TradeOffer>();
+        public List<TradeOffer> Offers { get; set; } = new();
         public User(string email, string password, int age, string securityQuestion, string securityAnswer)
         {
             Email = email;

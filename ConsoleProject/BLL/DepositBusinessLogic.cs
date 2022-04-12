@@ -20,7 +20,7 @@ namespace ConsoleProject.BLL
             {
                 if (CoinDB.Coins.Any(x => x.Abreviation == coinAbreviation))
                 {
-                    user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == coinAbreviation), amount));
+                    user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == coinAbreviation).CoinID, amount));
                 }
             }
         }

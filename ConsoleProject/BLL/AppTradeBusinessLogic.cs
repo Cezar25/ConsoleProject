@@ -31,7 +31,7 @@ namespace ConsoleProject.BLL
                 if(CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
                 {
                     double amountOfCoinBought = amountOfCoinSoldInEUR / CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
-                    user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation), amountOfCoinBought));
+                    user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).CoinID, amountOfCoinBought));
                 }
             }
 

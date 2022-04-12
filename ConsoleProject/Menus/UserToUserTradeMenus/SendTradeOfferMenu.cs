@@ -68,11 +68,11 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                         AppTradeBusinessLogic.GetConversionRate(sender.Wallets[choice2].CoinType.Abreviation, recipient.Wallets[choice].CoinType.Abreviation);
 
                         recipient.Offers.Add(new TradeOffer(
-                            sender,
-                            recipient,
-                            sender.Wallets[choice2].CoinType,
+                            sender.UserID,
+                            recipient.UserID,
+                            sender.Wallets[choice2].CoinType.CoinID,
                             AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation),
-                            recipient.Wallets[choice].CoinType,
+                            recipient.Wallets[choice].CoinType.CoinID,
                             boughtAmount));
 
                         context.ShowBalance(sender.Email);

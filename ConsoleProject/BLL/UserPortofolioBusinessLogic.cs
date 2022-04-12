@@ -103,7 +103,7 @@ namespace ConsoleProject.BLL
                 else
                 {
                     double addedAmount = ((pair.Value / 100) * amount) / pair.Key.ValueInEUR;
-                    buyingUser.Wallets.Add(new Wallet(pair.Key, addedAmount));
+                    buyingUser.Wallets.Add(new Wallet(pair.Key.CoinID, addedAmount));
                 }
             }
         }

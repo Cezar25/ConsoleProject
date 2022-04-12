@@ -32,8 +32,8 @@ namespace TestConsoleApp
             double expected = 0;
 
             User testedUser = DBContext.Users[1];
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2], 2));
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5], 10));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2].CoinID, 2));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5].CoinID, 10));
 
             foreach (var wallet in testedUser.Wallets)
             {
@@ -69,8 +69,8 @@ namespace TestConsoleApp
             double expected = 0;
 
             User testedUser = DBContext.Users[3];
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2], 2));
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5], 10));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2].CoinID, 2));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5].CoinID, 10));
 
             foreach (var wallet in testedUser.Wallets)
             {
@@ -106,8 +106,8 @@ namespace TestConsoleApp
             double expected = 0;
 
             User testedUser = DBContext.Users[5];
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2], 2));
-            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5], 10));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[2].CoinID, 2));
+            testedUser.Wallets.Add(new Wallet(CoinDB.Coins[5].CoinID, 10));
 
             foreach (var wallet in testedUser.Wallets)
             {
