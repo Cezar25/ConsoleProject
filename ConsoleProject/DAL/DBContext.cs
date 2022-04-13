@@ -17,7 +17,6 @@ namespace ConsoleProject.Users
                 new User("3","3",25,"fish name?","nemo"),
                 new User("paul.popescu@yahoo.com","asdrwerw",30,"?","!"),
                 new User("andrei.ionescu@gmail.com","eweoriwer",21,"yes?","no",true)
-
         };
         public static void DisplayUSers()
         {
@@ -25,6 +24,7 @@ namespace ConsoleProject.Users
             {
                 Console.WriteLine(user.ToString());
             }
-        }        
+        }
+        public static List<TradeOffer> Offers { get; set; } = new List<TradeOffer>();
     }   
 }

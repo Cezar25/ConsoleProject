@@ -17,10 +17,11 @@ namespace ConsoleProject.Domain
         public double SentAmount { get; set; }
         public Coin ReceivedCoin { get; set; }
         public double ReceivedAmount { get; set; }
-        public Guid SenderID { get; set; } 
+        public Guid SenderID { get; set; }
         public Guid RecipientID { get; set; }
-        public Guid SentCoinID { get; set; }
-        public Guid ReceivedCoinID { get; set; }
+        public Guid? SentCoinID { get; set; }
+        public Guid? ReceivedCoinID { get; set; }
+        public static int Counter { get; set; } = 0;
 
         public TradeOffer(Guid senderID, Guid recipientID, Guid sentCoinID, double sentAmount, Guid receivedCoinID, double receivedAmount)
         {
@@ -37,7 +38,20 @@ namespace ConsoleProject.Domain
             ReceivedCoinID = receivedCoinID;
             ReceivedCoin = CoinDB.Coins.SingleOrDefault(x => x.CoinID == receivedCoinID);
             ReceivedAmount = receivedAmount;
+
+            Counter++;
         }
+
+        //public TradeOffer(User sender, User recipient, Coin sentCoin, double sentAmount, Coin receivedCoin, double receivedAmount)
+        //{
+        //    Sender = sender;
+        //    Recipient = recipient;
+        //    SentCoin = sentCoin;
+        //    SentAmount = sentAmount;
+        //    ReceivedCoin = receivedCoin;
+        //    ReceivedAmount = receivedAmount;
+
+        //}
 
         public override string ToString()
         {

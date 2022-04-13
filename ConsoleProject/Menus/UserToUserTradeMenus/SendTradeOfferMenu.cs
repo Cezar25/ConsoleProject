@@ -1,6 +1,7 @@
 ﻿using ConsoleProject.BLL;
 using ConsoleProject.Domain;
 using ConsoleProject.StrategyPatterm;
+using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                         Console.WriteLine($"Buying {boughtAmount} {recipient.Wallets[choice].CoinType.Abreviation} worth {AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation)} {sender.Wallets[choice2].CoinType.Abreviation} ");
                         AppTradeBusinessLogic.GetConversionRate(sender.Wallets[choice2].CoinType.Abreviation, recipient.Wallets[choice].CoinType.Abreviation);
 
-                        recipient.Offers.Add(new TradeOffer(
+                        DBContext.Offers.Add(new TradeOffer(
                             sender.UserID,
                             recipient.UserID,
                             sender.Wallets[choice2].CoinType.CoinID,

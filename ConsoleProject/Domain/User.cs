@@ -23,7 +23,7 @@ namespace ConsoleProject.Domain
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR").CoinID,0),
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD").CoinID,0)
         };
-        public List<TradeOffer> Offers { get; set; } = new();
+        //public List<TradeOffer> Offers { get; set; } = new();
         public User(string email, string password, int age, string securityQuestion, string securityAnswer)
         {
             Email = email;

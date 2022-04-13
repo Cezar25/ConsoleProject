@@ -1,6 +1,7 @@
 ﻿using ConsoleProject.BLL;
 using ConsoleProject.Domain;
 using ConsoleProject.StrategyPatterm;
+using ConsoleProject.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,72 +20,81 @@ namespace ConsoleProject.Menus.BalanceMenus
             Console.WriteLine();
             Console.WriteLine("NOTIFICATIONS MENU");
 
-            if(user.Offers.Count == 0)
+            if(DBContext.Offers.Any(x => x.RecipientID == user.UserID))
             {
-                Console.WriteLine("You don't have any notifications!");
-            }
-            else
-            {
-                int index = 0;
-                foreach (var offer in user.Offers)
+                if (DBContext.Offers.Where(x => x.RecipientID == user.UserID).ToList().Count() == 0)
                 {
-                    Console.WriteLine($"Trade offer number {index}: \n{offer.ToString()}");
-                    index++;
-                }
-
-                Console.WriteLine();
-                Console.WriteLine("Type in the index value of an offer to select it:");
-                Console.WriteLine($"Or {index} to go back to the BALANCE page.");
-
-                int choice = Convert.ToInt32(Console.ReadLine());
-
-                if (choice < 0 || choice > index)
-                {
-                    Console.WriteLine("Wrong choice! Please try again!");
-                    ShowNotifications(user);
-                } 
-                else if (choice == index)
-                {
-                    Console.WriteLine("Going back to BALANCE page...");
-                    context.ShowBalance(user.Email);
-
+                    Console.WriteLine("You don't have any notifications!");
                 }
                 else
                 {
-                    Console.WriteLine($"The offer is:\n{user.Offers[choice].ToString()}");
-                    Console.WriteLine("Press 1 to ACCEPT the offer.");
-                    Console.WriteLine("Press 2 to DENY the offer.");
-
-                    int choice2 = Convert.ToInt32(Console.ReadLine());
-
-                    switch (choice2)
+                    int index = 1;
+                    foreach (var offer in DBContext.Offers.Where(x => x.RecipientID == user.UserID))
                     {
-                        case 1:
-                            {
-                                Console.WriteLine("Trade offer accepted!");
-                                UserToUserTradeBusinessLogic.ApplyTrade(user.Offers[choice]);
-                                user.Offers.RemoveAt(choice);
+                        Console.WriteLine($"Trade offer number {index}: \n{offer.ToString()}");
+                        index++;
+                    }
 
-                                context.ShowBalance(user.Email);
-                                break;
-                            }
-                        case 2:
-                            {
-                                Console.WriteLine("Trade offer denied!");
-                                user.Offers.RemoveAt(choice);
+                    Console.WriteLine();
+                    Console.WriteLine("Type in the index value of an offer to select it:");
+                    Console.WriteLine($"Or {index} to go back to the BALANCE page.");
 
-                                context.ShowBalance(user.Email);
-                                break;
-                            }
-                        default:
-                            {
-                                Console.WriteLine("Wrong choice! Please try again!");
-                                ShowNotifications(user);
-                                break;
-                            }
+                    int choice = Convert.ToInt32(Console.ReadLine());
+
+                    if (choice < 0 || choice > index)
+                    {
+                        Console.WriteLine("Wrong choice! Please try again!");
+                        ShowNotifications(user);
+                    }
+                    else if (choice == index)
+                    {
+                        Console.WriteLine("Going back to BALANCE page...");
+                        context.ShowBalance(user.Email);
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"The offer is:\n{DBContext.Offers.Where(x => x.RecipientID == user.UserID).ToList()[choice].ToString()}");
+                        Console.WriteLine("Press 1 to ACCEPT the offer.");
+                        Console.WriteLine("Press 2 to DENY the offer.");
+
+                        int choice2 = Convert.ToInt32(Console.ReadLine());
+
+                        switch (choice2)
+                        {
+                            case 1:
+                                {
+                                    Console.WriteLine("Trade offer accepted!");
+                                    UserToUserTradeBusinessLogic.ApplyTrade(DBContext.Offers.Where(x => x.RecipientID == user.UserID).ToList()[choice]);
+                                    var offerToRemove = DBContext.Offers.Where(x => x.RecipientID == user.UserID).ToList()[choice];
+
+                                    DBContext.Offers.Remove(offerToRemove);
+
+                                    context.ShowBalance(user.Email);
+                                    break;
+                                }
+                            case 2:
+                                {
+                                    Console.WriteLine("Trade offer denied!");
+                                    var offerToRemove = DBContext.Offers.Where(x => x.RecipientID == user.UserID).ToList()[choice];
+
+                                    DBContext.Offers.Remove(offerToRemove);
+
+                                    context.ShowBalance(user.Email);
+                                    break;
+                                }
+                            default:
+                                {
+                                    Console.WriteLine("Wrong choice! Please try again!");
+                                    ShowNotifications(user);
+                                    break;
+                                }
+                        }
                     }
                 }
             }
+
+            
             
         }
     }

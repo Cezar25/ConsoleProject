@@ -11,6 +11,8 @@ namespace ConsoleProject.Domain
     {
         public DbSet<Coin> Coins { get; set; }
         public DbSet<User> Users { get; set; }
+        //public DbSet<TradeOffer> Offers { get; set; }
+        public DbSet<TradeOffer> Offers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -18,7 +20,7 @@ namespace ConsoleProject.Domain
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);           
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
