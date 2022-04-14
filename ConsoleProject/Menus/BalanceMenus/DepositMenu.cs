@@ -20,6 +20,10 @@ namespace ConsoleProject.Menus.BalanceMenus
             Console.WriteLine("Press 2 for USD.");
             Console.WriteLine("Press 0 for going back to the balance page.");
 
+            var db = new CryptoAvenueContext();
+
+            var actualUser = db.Users.Where(x => x.Equals(user)).FirstOrDefault();
+
             int choice = Convert.ToInt32(Console.ReadLine());
             switch (choice)
             {
@@ -37,7 +41,9 @@ namespace ConsoleProject.Menus.BalanceMenus
 
                         if (InputValidationBusinessLogic.ValidateIntOrDouble(amount))
                         {
-                            DepositBusinessLogic.AddCoin(user, "EUR", amount);
+                            DepositBusinessLogic.AddCoin(actualUser, "EUR", amount);
+
+                            db.SaveChanges();
 
                             Console.WriteLine("Deposit was succesful!");
 

@@ -23,7 +23,7 @@ namespace ConsoleProject
                 Console.WriteLine("For displaying the user database, press 3!");
                 Console.WriteLine("For exiting the program, press 0!");
 
-                int input = Convert.ToInt32(Console.ReadLine());
+                 int input = Convert.ToInt32(Console.ReadLine());
                 switch (input)
                 {
                     case 0:

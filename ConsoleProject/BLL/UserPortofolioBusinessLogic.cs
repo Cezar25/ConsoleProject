@@ -38,8 +38,12 @@ namespace ConsoleProject.BLL
         }
         public static void DisplayPortofolio(User user)
         {
+            var db = new CryptoAvenueContext();
+
+            var actualUser = db.Users.Where(x => x.Equals(user)).FirstOrDefault();
+
             Console.WriteLine();
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in actualUser.Wallets)
             {
                 Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {Math.Round(wallet.CoinAmount, 6)}");
             }
