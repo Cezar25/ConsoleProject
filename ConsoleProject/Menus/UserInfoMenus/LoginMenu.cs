@@ -13,14 +13,14 @@ namespace ConsoleProject.Menus.UserInfoMenus
     {
         public static void LoggingIn()
         {
-            List<User> currentUserDatabase = DBContext.Users;
+            var cryptoAvenueContext = new CryptoAvenueContext();
 
             Console.WriteLine("Please type in your email:");
             string inputEmail = Console.ReadLine();
 
-            if (currentUserDatabase.Any(x => x.Email == inputEmail))
+            if (cryptoAvenueContext.Users.Any(x => x.Email == inputEmail))
             {
-                var found = currentUserDatabase.Single(x => x.Email == inputEmail);
+                var found = cryptoAvenueContext.Users.Single(x => x.Email == inputEmail);
 
                 Console.WriteLine("Please type in your password:");
                 string inputPassword = Console.ReadLine();
@@ -28,7 +28,6 @@ namespace ConsoleProject.Menus.UserInfoMenus
                 if (found.Password == inputPassword)
                 {
                     Console.WriteLine("You have succesfully logged in!");
-                    //BalanceMenu.Balance(inputEmail);
 
                     BalanceMenu.Balance(inputEmail);
                 }

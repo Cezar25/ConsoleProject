@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.BLL;
+using ConsoleProject.Domain;
 using ConsoleProject.Menus.BalanceMenus;
 using ConsoleProject.Menus.UserInfoMenus;
 using ConsoleProject.Users;
@@ -17,9 +18,11 @@ namespace ConsoleProject.StrategyPatterm
             Console.Clear();
             Console.WriteLine("BALANCE PAGE");
 
-            if (DBContext.Users.Any(x => x.Email == userEmail))
+            var cryptoAvenueContext = new CryptoAvenueContext();
+
+            if (cryptoAvenueContext.Users.Any(x => x.Email == userEmail))
             {
-                var balanceOwner = DBContext.Users.Single(x => x.Email == userEmail);
+                var balanceOwner = cryptoAvenueContext.Users.Single(x => x.Email == userEmail);
 
                 Console.WriteLine($"Welcome {balanceOwner.Email}!");
                 Console.WriteLine($"Your total balance amount is ---");

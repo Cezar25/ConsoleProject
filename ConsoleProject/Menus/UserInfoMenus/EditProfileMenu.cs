@@ -14,6 +14,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
     {
         public static void EditProfile(User user)
         {
+
             //Console.Clear();
             Console.WriteLine();
             Console.WriteLine("PROFILE EDITING PAGE");
@@ -45,17 +46,20 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         AccountBusinessLogic.UpdateUserEmail(user, newEmail);
 
                         Console.WriteLine("Email succesfully changed!");
+
                         EditProfile(user);
                         break;
                     }
                 case 2:
                     {
-                        Console.WriteLine("Please enter your new email password:");
+                        Console.WriteLine("Please enter your new password:");
                         var newPassword = Console.ReadLine();
 
-                        AccountBusinessLogic.UpdateUserPassword(user, newPassword);
+                        //AccountBusinessLogic.UpdateUserPassword(user, newPassword);
+                        user.Password = newPassword;
 
                         Console.WriteLine("Password succesfully changed!");
+
                         EditProfile(user);
                         break;
                     }
@@ -70,6 +74,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         AccountBusinessLogic.UpdateUserQnA(user, newQuestion, newAnswer);
 
                         Console.WriteLine("Security question and answer succesfully changed!");
+
                         EditProfile(user);
                         break;
                     }

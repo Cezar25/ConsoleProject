@@ -1,4 +1,5 @@
 ﻿using ConsoleProject.BLL;
+using ConsoleProject.Domain;
 using ConsoleProject.Menus.AppTradeMenus;
 using ConsoleProject.Menus.BalanceMenus;
 using ConsoleProject.Menus.UserInfoMenus;
@@ -21,9 +22,11 @@ namespace ConsoleProject.StrategyPatterm
             Console.WriteLine();
             Console.WriteLine("BALANCE PAGE");
 
-            if (DBContext.Users.Any(x => x.Email == userEmail))
+            var cryptoAvenueContext = new CryptoAvenueContext();
+
+            if (cryptoAvenueContext.Users.Any(x => x.Email == userEmail))
             {
-                var balanceOwner = DBContext.Users.Single(x => x.Email == userEmail);
+                var balanceOwner = cryptoAvenueContext.Users.Single(x => x.Email == userEmail);
 
                 Console.WriteLine($"Welcome {balanceOwner.Email}!");
                 Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(balanceOwner), 3)} EUR");
@@ -49,8 +52,7 @@ namespace ConsoleProject.StrategyPatterm
                 switch (choice)
                 {
                     case 1:
-                        {
-                            
+                        { 
                             GetCreditCardInfoMenu.GetCreditCardInfo(balanceOwner);
 
                             break;
@@ -107,6 +109,8 @@ namespace ConsoleProject.StrategyPatterm
                             break;
                         }
                 }
+                cryptoAvenueContext.SaveChanges();
+                
             }
         }
     }

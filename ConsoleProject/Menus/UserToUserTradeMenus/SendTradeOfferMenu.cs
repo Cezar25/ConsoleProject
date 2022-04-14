@@ -68,13 +68,15 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                         Console.WriteLine($"Buying {boughtAmount} {recipient.Wallets[choice].CoinType.Abreviation} worth {AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation)} {sender.Wallets[choice2].CoinType.Abreviation} ");
                         AppTradeBusinessLogic.GetConversionRate(sender.Wallets[choice2].CoinType.Abreviation, recipient.Wallets[choice].CoinType.Abreviation);
 
-                        DBContext.Offers.Add(new TradeOffer(
-                            sender.UserID,
-                            recipient.UserID,
-                            sender.Wallets[choice2].CoinType.CoinID,
-                            AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation),
-                            recipient.Wallets[choice].CoinType.CoinID,
-                            boughtAmount));
+                        DBContext.Offers.Add(new TradeOffer
+                        {
+                            SenderID = sender.UserID,
+                            RecipientID = recipient.UserID,
+                            SentCoinID = sender.Wallets[choice2].CoinType.CoinID,
+                            SentAmount = AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation),
+                            ReceivedCoinID = recipient.Wallets[choice].CoinType.CoinID,
+                            ReceivedAmount = boughtAmount
+                        });
 
                         context.ShowBalance(sender.Email);
                     }
