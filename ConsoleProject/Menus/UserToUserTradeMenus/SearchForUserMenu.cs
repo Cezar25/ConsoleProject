@@ -47,7 +47,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                     {
                         case 0:
                             {
-                                context.ShowBalance(user.Email);
+                                context.ShowBalance(user);
                                 break;
                             }
                         case 1:
@@ -69,7 +69,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                             }
                     }
 
-                    context.ShowBalance(user.Email);
+                    context.ShowBalance(user);
                 }
                 
             }
@@ -91,7 +91,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                         }
                     case 2:
                         {
-                            context.ShowBalance(user.Email);
+                            context.ShowBalance(user);
                             break;
                         }
                     default:

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleProject.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace ConsoleProject.StrategyPatterm
 {
     public interface IShowBalanceStrategy
     {
-        public void ShowBalance(string userEmail);
+        public void ShowBalance(User user);
     }
 }

@@ -29,7 +29,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
             {
                 case 0:
                     {
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
                         break;
                     }
                 case 1:
@@ -45,7 +45,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                         {
                             case 0:
                                 {
-                                    context.ShowBalance(user.Email);
+                                    context.ShowBalance(user);
                                     break;
                                 }
                             case 1:
@@ -72,7 +72,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             {
                                                 user.Wallets.Single(x => x.CoinType.Abreviation == "EUR").CoinAmount -= amount;
                                                 UserPortofolioBusinessLogic.AddCopiedPortofolio(user, searchedUser, amount);
-                                                context.ShowBalance(user.Email);
+                                                context.ShowBalance(user);
                                             }
                                         }
                                     }
@@ -103,7 +103,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             {
                                                 user.Wallets.Single(x => x.CoinType.Abreviation == "USD").CoinAmount -= amount;
                                                 UserPortofolioBusinessLogic.AddCopiedPortofolio(user, searchedUser, amount);
-                                                context.ShowBalance(user.Email);
+                                                context.ShowBalance(user);
                                             }
                                         }
                                     }
@@ -124,7 +124,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                 default:
                     {
                         Console.WriteLine("Wrong choice! You are being redirected to the BALANCE page.");
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
                         break;
                     }
             }

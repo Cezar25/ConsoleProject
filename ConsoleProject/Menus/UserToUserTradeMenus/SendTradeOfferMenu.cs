@@ -78,7 +78,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                             ReceivedAmount = boughtAmount
                         });
 
-                        context.ShowBalance(sender.Email);
+                        context.ShowBalance(sender);
                     }
                 }
             }

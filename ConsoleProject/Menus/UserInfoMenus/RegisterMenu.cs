@@ -43,7 +43,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
 
             var context = new ShowBalanceContext();
             context.SetStrategy(new ShownBalanceStrategy());
-            context.ShowBalance(inputEmail);
+            context.ShowBalance(cryptoAvenueContext.Users.SingleOrDefault(x => x.Email == inputEmail));
         }
     }
 }

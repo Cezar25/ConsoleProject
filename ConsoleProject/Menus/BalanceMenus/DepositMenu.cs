@@ -27,7 +27,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                     {
                         var context = new ShowBalanceContext();
                         context.SetStrategy(new ShownBalanceStrategy());
-                        context.ShowBalance(user.Email); ;
+                        context.ShowBalance(user); ;
                         break;
                     }
                 case 1:
@@ -41,7 +41,7 @@ namespace ConsoleProject.Menus.BalanceMenus
 
                             Console.WriteLine("Deposit was succesful!");
 
-                            BalanceMenu.Balance(user.Email);
+                            BalanceMenu.Balance(user);
                         }
                         else
                         {
@@ -61,7 +61,7 @@ namespace ConsoleProject.Menus.BalanceMenus
 
                         Console.WriteLine("Deposit was succesful!");
 
-                        BalanceMenu.Balance(user.Email);
+                        BalanceMenu.Balance(user);
                         break;
                     }
                 default:

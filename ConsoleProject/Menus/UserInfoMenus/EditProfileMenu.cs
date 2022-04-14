@@ -21,7 +21,11 @@ namespace ConsoleProject.Menus.UserInfoMenus
             Console.WriteLine();
 
             Console.WriteLine("Your current credentials are:");
-            Console.WriteLine(user.ToString());
+
+            var db = new CryptoAvenueContext();
+            var foundUser = db.Users.Where(x => x == user).FirstOrDefault();
+
+            Console.WriteLine(foundUser.ToString());
 
             Console.WriteLine("What do you wish to change?");
             Console.WriteLine("Press 1 for changing your email.");
@@ -35,7 +39,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
             {
                 case 0:
                     {
-                        BalanceMenu.Balance(user.Email);
+                        BalanceMenu.Balance(user);
                         break;
                     }
                 case 1:
@@ -55,8 +59,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
                         Console.WriteLine("Please enter your new password:");
                         var newPassword = Console.ReadLine();
 
-                        //AccountBusinessLogic.UpdateUserPassword(user, newPassword);
-                        user.Password = newPassword;
+                        AccountBusinessLogic.UpdateUserPassword(user, newPassword);
 
                         Console.WriteLine("Password succesfully changed!");
 

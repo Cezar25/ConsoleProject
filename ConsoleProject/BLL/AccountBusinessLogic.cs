@@ -19,26 +19,47 @@ namespace ConsoleProject.BLL
         }
         public static void ChangeProfileType(User user)
         {
+            var db = new CryptoAvenueContext();
+
+            var found = db.Users.Where(x => x == user).FirstOrDefault();
+
             Console.WriteLine("Press 1 to make your profile");
             if (user.PrivateProfile == false)
                 Console.WriteLine("Public");
             else
                 Console.WriteLine("Private");
 
-            user.PrivateProfile = !user.PrivateProfile;
-        }        
+            found.PrivateProfile = !found.PrivateProfile;
+
+            db.SaveChanges();
+        }
         public static void UpdateUserEmail(User user, string email)
         {
-            user.Email = email;
+            var db = new CryptoAvenueContext();
+
+            var found = db.Users.Where(x => x == user).FirstOrDefault();
+            found.Email = email;
+
+            db.SaveChanges();
         }
         public static void UpdateUserPassword(User user, string password)
         {
-            user.Password = password;
+            var db = new CryptoAvenueContext();
+            var found = db.Users.Where(x => x == user).FirstOrDefault();
+
+            found.Password = password;
+
+            db.SaveChanges();
         }
         public static void UpdateUserQnA(User user, string question, string answer)
         {
-            user.SecurityQuestion = question;
-            user.SecurityAnswer = answer;
+            var db = new CryptoAvenueContext();
+            var found = db.Users.Where(x => x == user).FirstOrDefault();
+
+            found.SecurityQuestion = question;
+            found.SecurityAnswer = answer;
+
+            db.SaveChanges();
         }
     }
 }

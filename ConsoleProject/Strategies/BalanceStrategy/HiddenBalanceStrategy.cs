@@ -13,23 +13,22 @@ namespace ConsoleProject.StrategyPatterm
 {
     public class HiddenBalanceStrategy : IShowBalanceStrategy
     {
-        public void ShowBalance(string userEmail)
+        public void ShowBalance(User user)
         {
             Console.Clear();
             Console.WriteLine("BALANCE PAGE");
 
             var cryptoAvenueContext = new CryptoAvenueContext();
 
-            if (cryptoAvenueContext.Users.Any(x => x.Email == userEmail))
+            if (cryptoAvenueContext.Users.Contains(user))
             {
-                var balanceOwner = cryptoAvenueContext.Users.Single(x => x.Email == userEmail);
 
-                Console.WriteLine($"Welcome {balanceOwner.Email}!");
+                Console.WriteLine($"Welcome {user.Email}!");
                 Console.WriteLine($"Your total balance amount is ---");
-                AccountBusinessLogic.DisplayPrivacy(balanceOwner);
+                AccountBusinessLogic.DisplayPrivacy(user);
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                UserPortofolioBusinessLogic.DisplayHiddenPortofolio(balanceOwner);
+                UserPortofolioBusinessLogic.DisplayHiddenPortofolio(user);
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");
@@ -45,19 +44,19 @@ namespace ConsoleProject.StrategyPatterm
                 {
                     case 1:
                         {
-                            GetCreditCardInfoMenu.GetCreditCardInfo(balanceOwner);
+                            GetCreditCardInfoMenu.GetCreditCardInfo(user);
 
                             break;
                         }
                     case 2:
                         {
-                            GetBankAccountInfoMenu.GetBankAccountInfo(balanceOwner);
+                            GetBankAccountInfoMenu.GetBankAccountInfo(user);
 
                             break;
                         }
                     case 3:
                         {
-                            EditProfileMenu.EditProfile(balanceOwner);
+                            EditProfileMenu.EditProfile(user);
                             break;
                         }
                     case 4:
@@ -65,13 +64,13 @@ namespace ConsoleProject.StrategyPatterm
                             //BalanceMenu.Balance(userEmail);
                             var context = new ShowBalanceContext();
                             context.SetStrategy(new ShownBalanceStrategy());
-                            context.ShowBalance(userEmail);
+                            context.ShowBalance(user);
                             break;
                         }
                     case 5:
                         {
-                            AccountBusinessLogic.ChangeProfileType(balanceOwner);
-                            ShowBalance(userEmail);
+                            AccountBusinessLogic.ChangeProfileType(user);
+                            ShowBalance(user);
                             break;
                         }
                     case 6:
@@ -84,7 +83,7 @@ namespace ConsoleProject.StrategyPatterm
                     default:
                         {
                             Console.WriteLine("Wrong choice, please try again!");
-                            ShowBalance(userEmail);
+                            ShowBalance(user);
                             break;
                         }
                 }

@@ -15,7 +15,7 @@ namespace ConsoleProject.StrategyPatterm
 {
     public class ShownBalanceStrategy : IShowBalanceStrategy
     {
-        public void ShowBalance(string userEmail)
+        public void ShowBalance(User user)
         {
             //Console.Clear();
             Console.WriteLine();
@@ -24,17 +24,16 @@ namespace ConsoleProject.StrategyPatterm
 
             var cryptoAvenueContext = new CryptoAvenueContext();
 
-            if (cryptoAvenueContext.Users.Any(x => x.Email == userEmail))
+            if (cryptoAvenueContext.Users.Any(x => x == user))
             {
-                var balanceOwner = cryptoAvenueContext.Users.Single(x => x.Email == userEmail);
 
-                Console.WriteLine($"Welcome {balanceOwner.Email}!");
-                Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(balanceOwner), 3)} EUR");
-                AccountBusinessLogic.DisplayPrivacy(balanceOwner);
+                Console.WriteLine($"Welcome {user.Email}!");
+                Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(user), 3)} EUR");
+                AccountBusinessLogic.DisplayPrivacy(user);
 
                 Console.WriteLine();
                 Console.WriteLine("Below you have a list of all the coins in your portofolio");
-                UserPortofolioBusinessLogic.DisplayPortofolio(balanceOwner);
+                UserPortofolioBusinessLogic.DisplayPortofolio(user);
 
                 Console.WriteLine("\nWhat do you wish to do now?");
                 Console.WriteLine("Press 1 for depositing money.");
@@ -53,47 +52,47 @@ namespace ConsoleProject.StrategyPatterm
                 {
                     case 1:
                         { 
-                            GetCreditCardInfoMenu.GetCreditCardInfo(balanceOwner);
+                            GetCreditCardInfoMenu.GetCreditCardInfo(user);
 
                             break;
                         }
                     case 2:
                         {
-                            GetBankAccountInfoMenu.GetBankAccountInfo(balanceOwner);
+                            GetBankAccountInfoMenu.GetBankAccountInfo(user);
 
                             break;
                         }
                     case 3:
                         {
-                            EditProfileMenu.EditProfile(balanceOwner);
+                            EditProfileMenu.EditProfile(user);
                             break;
                         }
                     case 4:
                         {
                             var context = new ShowBalanceContext();
                             context.SetStrategy(new HiddenBalanceStrategy());
-                            context.ShowBalance(userEmail);
+                            context.ShowBalance(user);
                             break;
                         }
                     case 5:
                         {
-                            AccountBusinessLogic.ChangeProfileType(balanceOwner);
-                            ShowBalance(userEmail);
+                            AccountBusinessLogic.ChangeProfileType(user);
+                            ShowBalance(user);
                             break;
                         }
                     case 6:
                         {
-                            TradeWithAppMenu.TradeWithApp(balanceOwner);
+                            TradeWithAppMenu.TradeWithApp(user);
                             break;
                         }
                     case 7:
                         {
-                            SearchForUserMenu.SearchForOtherUser(balanceOwner);
+                            SearchForUserMenu.SearchForOtherUser(user);
                             break;
                         }
                     case 8:
                         {
-                            NotificationsMenu.ShowNotifications(balanceOwner);
+                            NotificationsMenu.ShowNotifications(user);
                             break;
                         }
                     case 9:
@@ -105,7 +104,7 @@ namespace ConsoleProject.StrategyPatterm
                     default:
                         {
                             Console.WriteLine("Wrong choice, please try again!");
-                            ShowBalance(userEmail);
+                            ShowBalance(user);
                             break;
                         }
                 }

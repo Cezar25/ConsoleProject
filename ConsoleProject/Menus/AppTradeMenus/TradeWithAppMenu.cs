@@ -123,7 +123,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     {
                         Console.WriteLine("Returning to BAlANCE page...");
                         
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
                         break;
                     }
                 case 1:
@@ -131,13 +131,13 @@ namespace ConsoleProject.Menus.AppTradeMenus
                         Console.WriteLine("Trade accepted! Proceding with the trade...");
                         AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice1], soldCoinAmount, boughtCoinAbreviation);
 
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
                         break;
                     }
                 case 2:
                     {
                         Console.WriteLine("Trade cancelled! Returning to BALANCE page....");
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
                         break;
                     }
                 default:

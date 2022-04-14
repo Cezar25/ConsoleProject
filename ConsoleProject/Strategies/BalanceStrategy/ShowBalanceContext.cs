@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConsoleProject.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,12 @@ namespace ConsoleProject.StrategyPatterm
             _strategy = strategy;
         }
 
-        public void ShowBalance(string userEmail)
+        public void ShowBalance(User user)
         {
             if (_strategy == null)
                 Console.WriteLine("No strategy selected!");
             else
-                _strategy.ShowBalance(userEmail);
+                _strategy.ShowBalance(user);
         }
 
     }

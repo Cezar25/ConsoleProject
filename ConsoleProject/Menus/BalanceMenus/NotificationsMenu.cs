@@ -49,7 +49,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                     else if (choice == index)
                     {
                         Console.WriteLine("Going back to BALANCE page...");
-                        context.ShowBalance(user.Email);
+                        context.ShowBalance(user);
 
                     }
                     else
@@ -70,7 +70,7 @@ namespace ConsoleProject.Menus.BalanceMenus
 
                                     DBContext.Offers.Remove(offerToRemove);
 
-                                    context.ShowBalance(user.Email);
+                                    context.ShowBalance(user);
                                     break;
                                 }
                             case 2:
@@ -80,7 +80,7 @@ namespace ConsoleProject.Menus.BalanceMenus
 
                                     DBContext.Offers.Remove(offerToRemove);
 
-                                    context.ShowBalance(user.Email);
+                                    context.ShowBalance(user);
                                     break;
                                 }
                             default:

@@ -39,6 +39,37 @@ namespace ConsoleProject.Domain
         {
             return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\nPrivate profile:{PrivateProfile}\n";
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is User user &&
+                   Email == user.Email &&
+                   Password == user.Password &&
+                   Age == user.Age &&
+                   UserID.Equals(user.UserID) &&
+                   SecurityQuestion == user.SecurityQuestion &&
+                   SecurityAnswer == user.SecurityAnswer &&
+                   PrivateProfile == user.PrivateProfile &&
+                   EqualityComparer<List<Wallet>>.Default.Equals(Wallets, user.Wallets) &&
+                   EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersSent, user.OffersSent) &&
+                   EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersReceived, user.OffersReceived);
+        }
+
+        public override int GetHashCode()
+        {
+            HashCode hash = new HashCode();
+            hash.Add(Email);
+            hash.Add(Password);
+            hash.Add(Age);
+            hash.Add(UserID);
+            hash.Add(SecurityQuestion);
+            hash.Add(SecurityAnswer);
+            hash.Add(PrivateProfile);
+            hash.Add(Wallets);
+            hash.Add(OffersSent);
+            hash.Add(OffersReceived);
+            return hash.ToHashCode();
+        }
         #region Nav Properties 
         public ICollection<TradeOffer> OffersSent { get; set; } = new List<TradeOffer>();
         public ICollection<TradeOffer> OffersReceived { get; set; } = new List<TradeOffer>();

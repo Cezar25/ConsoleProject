@@ -29,7 +29,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
                 {
                     Console.WriteLine("You have succesfully logged in!");
 
-                    BalanceMenu.Balance(inputEmail);
+                    BalanceMenu.Balance(found);
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace ConsoleProject.Menus.UserInfoMenus
                                 {
                                     Console.WriteLine("You have succesfully logged in!");
                                     
-                                    BalanceMenu.Balance(inputEmail);
+                                    BalanceMenu.Balance(found);
                                 }
                                 else
                                 {

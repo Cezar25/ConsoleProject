@@ -25,7 +25,7 @@ namespace ConsoleProject.Menus.BalanceMenus
             {
                 case 0:
                     {
-                        BalanceMenu.Balance(user.Email);
+                        BalanceMenu.Balance(user);
                         break;
                     }
                 case 1:
@@ -42,7 +42,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         WithdrawBusinessLogic.RemoveCoin(user, "EUR", amount);
                         Console.WriteLine("Withdrawal was succesful!");
 
-                        BalanceMenu.Balance(user.Email);
+                        BalanceMenu.Balance(user);
                         break;
                     }
                 case 2:
@@ -59,7 +59,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         WithdrawBusinessLogic.RemoveCoin(user, "USD", amount);
                         Console.WriteLine("Withdrawal was succesful!");
 
-                        BalanceMenu.Balance(user.Email);
+                        BalanceMenu.Balance(user);
                         break;
                     }
                 default:

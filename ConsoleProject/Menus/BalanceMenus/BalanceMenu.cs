@@ -1,4 +1,5 @@
-﻿using ConsoleProject.Menus.AppTradeMenus;
+﻿using ConsoleProject.Domain;
+using ConsoleProject.Menus.AppTradeMenus;
 using ConsoleProject.Menus.BalanceMenus;
 using ConsoleProject.StrategyPatterm;
 using ConsoleProject.Users;
@@ -12,11 +13,11 @@ namespace ConsoleProject.Menus.UserInfoMenus
 {
     public class BalanceMenu
     {
-        public static void Balance(string email) 
+        public static void Balance(User user) 
         {
             var context = new ShowBalanceContext();
             context.SetStrategy(new ShownBalanceStrategy());
-            context.ShowBalance(email);
+            context.ShowBalance(user);
         }
     }
 }
