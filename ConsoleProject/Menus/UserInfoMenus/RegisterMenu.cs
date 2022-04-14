@@ -36,6 +36,11 @@ namespace ConsoleProject.Menus.UserInfoMenus
             Console.WriteLine("You have succesfully registered!");
             //DBContext.DisplayUSers();
 
+            var cryptoAvenueContext = new CryptoAvenueContext();
+
+            cryptoAvenueContext.Add(new User(inputEmail, inputPassword, inputAge, inputQuestion, inputAnswer));
+            cryptoAvenueContext.SaveChanges();
+
             var context = new ShowBalanceContext();
             context.SetStrategy(new ShownBalanceStrategy());
             context.ShowBalance(inputEmail);

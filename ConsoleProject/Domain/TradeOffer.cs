@@ -19,8 +19,8 @@ namespace ConsoleProject.Domain
         public double ReceivedAmount { get; set; }
         public Guid SenderID { get; set; }
         public Guid RecipientID { get; set; }
-        public Guid? SentCoinID { get; set; }
-        public Guid? ReceivedCoinID { get; set; }
+        public Guid SentCoinID { get; set; }
+        public Guid ReceivedCoinID { get; set; }
         public static int Counter { get; set; } = 0;
 
         public TradeOffer(Guid senderID, Guid recipientID, Guid sentCoinID, double sentAmount, Guid receivedCoinID, double receivedAmount)

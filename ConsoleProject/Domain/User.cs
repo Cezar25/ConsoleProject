@@ -23,7 +23,6 @@ namespace ConsoleProject.Domain
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR").CoinID,0),
             new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD").CoinID,0)
         };
-        //public List<TradeOffer> Offers { get; set; } = new();
         public User(string email, string password, int age, string securityQuestion, string securityAnswer)
         {
             Email = email;
@@ -40,5 +39,9 @@ namespace ConsoleProject.Domain
         {
             return $"Email: {Email}\nPassword: {Password}\nAge: {Age}\nUserID: {UserID}\nSecurity Question: {SecurityQuestion}\nSecurity Answer: {SecurityAnswer}\nPrivate profile:{PrivateProfile}\n";
         }
+        #region Nav Properties 
+        public ICollection<TradeOffer> OffersSent { get; set; } = new List<TradeOffer>();
+        public ICollection<TradeOffer> OffersReceived { get; set; } = new List<TradeOffer>();
+        #endregion
     }
 }

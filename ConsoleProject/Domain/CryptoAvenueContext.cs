@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using ConsoleProject.EntityConfigurations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ConsoleProject.Domain
     {
         public DbSet<Coin> Coins { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<TradeOffer> Offers { get; set; }
+
         public DbSet<TradeOffer> Offers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -20,7 +21,7 @@ namespace ConsoleProject.Domain
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new TradeOfferEntityTypeConfiguration());
         }
     }
 }

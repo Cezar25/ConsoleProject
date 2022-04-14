@@ -28,7 +28,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                 }
                 else
                 {
-                    int index = 1;
+                    int index = 0;
                     foreach (var offer in DBContext.Offers.Where(x => x.RecipientID == user.UserID))
                     {
                         Console.WriteLine($"Trade offer number {index}: \n{offer.ToString()}");

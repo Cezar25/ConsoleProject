@@ -43,5 +43,9 @@ namespace ConsoleProject.Domain
         {
             return base.GetHashCode();
         }
+        #region Nav Properties 
+        public ICollection<TradeOffer> OffersSent { get; set; } = new List<TradeOffer>();
+        public ICollection<TradeOffer> OffersReceived { get; set; } = new List<TradeOffer>();
+        #endregion
     }
 }
