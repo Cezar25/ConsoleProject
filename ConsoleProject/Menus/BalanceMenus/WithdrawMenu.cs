@@ -14,6 +14,7 @@ namespace ConsoleProject.Menus.BalanceMenus
     {
         public static void WithdrawMoney(User user)
         {
+            var db = new CryptoAvenueContext();
 
             Console.WriteLine("Please select the fiat currency you want to withdraw:");
             Console.WriteLine("Press 1 for EUR.");
@@ -33,7 +34,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of EUR you want to withdraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
 
-                        if(amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
+                        if(amount > db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
                         {
                             Console.WriteLine("Wrong input! Please try again!");
                             WithdrawMoney(user);
@@ -50,7 +51,7 @@ namespace ConsoleProject.Menus.BalanceMenus
                         Console.WriteLine("Please enter the amount(double) of USD you want to withddraw:");
                         double amount = Convert.ToDouble(Console.ReadLine());
 
-                        if (amount > user.Wallets.SingleOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
+                        if (amount > db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
                         {
                             Console.WriteLine("Wrong input! Please try again!");
                             WithdrawMoney(user);

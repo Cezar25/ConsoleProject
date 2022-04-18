@@ -11,8 +11,10 @@ namespace ConsoleProject.BLL
     {
         public static double GetTotalPortofolioValueInEUR(User user)
         {
+            var db = new CryptoAvenueContext();
+
             double total = 0;
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 total += wallet.CoinType.ValueInEUR * wallet.CoinAmount;
             }
@@ -20,8 +22,10 @@ namespace ConsoleProject.BLL
         }
         public static double GetTotalPortofolioValueInUSD(User user)
         {
+            var db = new CryptoAvenueContext();
+
             double total = 0;
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 total += wallet.CoinType.ValueInUSD * wallet.CoinAmount;
             }
@@ -29,8 +33,10 @@ namespace ConsoleProject.BLL
         }
         public static double GetTotalPortofolioValueInBTC(User user)
         {
+            var db = new CryptoAvenueContext();
+
             double total = 0;
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 total += wallet.CoinType.ValueInBTC * wallet.CoinAmount;
             }
@@ -40,10 +46,8 @@ namespace ConsoleProject.BLL
         {
             var db = new CryptoAvenueContext();
 
-            var actualUser = db.Users.Where(x => x.Equals(user)).FirstOrDefault();
-
             Console.WriteLine();
-            foreach (var wallet in actualUser.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    {Math.Round(wallet.CoinAmount, 6)}");
             }
@@ -52,8 +56,10 @@ namespace ConsoleProject.BLL
 
         public static void DisplayHiddenPortofolio(User user)
         {
+            var db = new CryptoAvenueContext();
+
             Console.WriteLine();
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 Console.WriteLine($"Coin:  {wallet.CoinType.Abreviation} ({wallet.CoinType.Name})       amount:    ---");
             }
@@ -61,11 +67,13 @@ namespace ConsoleProject.BLL
         }
         public static Dictionary<Coin,double> GetCoinPercentage(User user)
         {
+            var db = new CryptoAvenueContext();
+
             Dictionary<Coin,double> percentageCoin = new Dictionary<Coin,Double>();
 
             double portofolioValueInEUR = 0;
 
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 if(wallet.CoinAmount > 0)
                 {
@@ -73,7 +81,7 @@ namespace ConsoleProject.BLL
                 }
             }
 
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 if(wallet.CoinAmount > 0)
                 {
@@ -95,21 +103,25 @@ namespace ConsoleProject.BLL
 
         public static void AddCopiedPortofolio(User buyingUser, User portofolioOwner, double amount)
         {
+            var db = new CryptoAvenueContext();
+
             Dictionary<Coin, double> percentageCoin = GetCoinPercentage(portofolioOwner);
 
             foreach (var pair in percentageCoin)
             {
-                if(buyingUser.Wallets.Any(x => x.CoinType.Abreviation == pair.Key.Abreviation))
+                if(db.Wallets.Where(x => x.UserID == buyingUser.UserID).Any(x => x.CoinType.Abreviation == pair.Key.Abreviation))
                 {
-                    double addedAmount = ((pair.Value / 100) * amount) / buyingUser.Wallets.Single(x => x.CoinType.Abreviation == pair.Key.Abreviation).CoinType.ValueInEUR;
-                    buyingUser.Wallets.Single(x => x.CoinType.Abreviation == pair.Key.Abreviation).CoinAmount += addedAmount;
+                    double addedAmount = ((pair.Value / 100) * amount) / db.Wallets.Where(x => x.UserID == buyingUser.UserID).FirstOrDefault(x => x.CoinType.Abreviation == pair.Key.Abreviation).CoinType.ValueInEUR;
+                    db.Wallets.Where(x => x.UserID == buyingUser.UserID).FirstOrDefault(x => x.CoinType.Abreviation == pair.Key.Abreviation).CoinAmount += addedAmount;
                 }
                 else
                 {
                     double addedAmount = ((pair.Value / 100) * amount) / pair.Key.ValueInEUR;
-                    buyingUser.Wallets.Add(new Wallet(pair.Key.CoinID, addedAmount));
+                    db.Wallets.Add(new Wallet() { CoinID = pair.Key.CoinID, UserID = buyingUser.UserID,CoinAmount = addedAmount });
                 }
             }
+
+            db.SaveChanges();
         }
     }
 }

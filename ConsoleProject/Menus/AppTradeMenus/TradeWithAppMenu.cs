@@ -15,6 +15,8 @@ namespace ConsoleProject.Menus.AppTradeMenus
     {
         public static void TradeWithApp(User user)
         {
+            var db = new CryptoAvenueContext();
+
             Console.Clear();
             Console.WriteLine("Welcome to the App Trading page!");
             Console.WriteLine("Here you can exchange currencies from your portofolio directly with the app wallet INSTANTLY!");
@@ -23,7 +25,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
 
             int index = 0;
 
-            foreach (var wallet in user.Wallets)
+            foreach (var wallet in db.Wallets.Where(x => x.UserID == user.UserID))
             {
                 Console.WriteLine($"Press {index} for {wallet.CoinType.Abreviation}      (available amount: {wallet.CoinAmount})");
                 index++;
@@ -38,7 +40,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
             }
             else
             {
-                Console.WriteLine($"Please type in the amount of {user.Wallets[choice].CoinType.Abreviation} you wish to sell");
+                Console.WriteLine($"Please type in the amount of {db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation} you wish to sell");
                 double sellAmount = Convert.ToDouble(Console.ReadLine());
 
                 Console.WriteLine();
@@ -46,7 +48,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
 
                 int index2 = 0;
 
-                if (user.Wallets[choice].CoinType.Abreviation == "EUR" || user.Wallets[choice].CoinType.Abreviation == "USD" || user.Wallets[choice].CoinType.Abreviation == "BTC")
+                if (db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation == "EUR" || db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation == "USD" || db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation == "BTC")
                 {
                     foreach (var coin in CoinDB.Coins)
                     {
@@ -62,7 +64,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     }
                     else
                     {
-                        ShowTradeOffer(user, user.Wallets[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, user.Wallets[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
+                        ShowTradeOffer(user, db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
                         
                     }
                 }
@@ -86,15 +88,18 @@ namespace ConsoleProject.Menus.AppTradeMenus
                     }
                     else
                     {
-                        ShowTradeOffer(user, user.Wallets[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, user.Wallets[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
+                        ShowTradeOffer(user, db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation, sellAmount, CoinDB.Coins[choice2].Abreviation, AppTradeBusinessLogic.GetBoughtCoinAmount(sellAmount, db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice].CoinType.Abreviation, CoinDB.Coins[choice2].Abreviation), choice, choice2);
                     }
                 }
 
             }
+            db.SaveChanges();
         }
 
         public static void ShowTradeOffer(User user, string soldCoinAbreviation, double soldCoinAmount, string boughtCoinAbreviation, double boughtCoinAmount, int choice1, int choice2)
         {
+            var db = new CryptoAvenueContext();
+
             Console.WriteLine();
             Console.WriteLine("Your trade offer is: ");
             Console.WriteLine($"{soldCoinAmount }  {soldCoinAbreviation} for {Math.Round(boughtCoinAmount,6)}  {boughtCoinAbreviation}");
@@ -129,7 +134,7 @@ namespace ConsoleProject.Menus.AppTradeMenus
                 case 1:
                     {
                         Console.WriteLine("Trade accepted! Proceding with the trade...");
-                        AppTradeBusinessLogic.ConvertCoinToCoin(user, user.Wallets[choice1], soldCoinAmount, boughtCoinAbreviation);
+                        AppTradeBusinessLogic.ConvertCoinToCoin(user, db.Wallets.Where(x => x.UserID == user.UserID).ToList()[choice1], soldCoinAmount, boughtCoinAbreviation);
 
                         context.ShowBalance(user);
                         break;

@@ -13,6 +13,8 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
     {
         public static void PortofolioPercentageMenu(User user, User searchedUser)
         {
+            var db = new CryptoAvenueContext();
+
             var context = new ShowBalanceContext();
             context.SetStrategy(new ShownBalanceStrategy());
 
@@ -50,9 +52,9 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                 }
                             case 1:
                                 {
-                                    if(user.Wallets.Any(x => x.CoinType.Abreviation == "EUR"))
+                                    if(db.Wallets.Where(x => x.UserID == user.UserID).Any(x => x.CoinType.Abreviation == "EUR"))
                                     {
-                                        if(user.Wallets.Single(x => x.CoinType.Abreviation == "EUR").CoinAmount <= 0)
+                                        if(db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount <= 0)
                                         {
                                             Console.WriteLine("No EUR available! Please try again!");
                                             PortofolioPercentageMenu(user, searchedUser);
@@ -62,7 +64,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             Console.WriteLine("Type in the amount of EUR you want to invest:");
 
                                             double amount = Convert.ToDouble(Console.ReadLine());
-                                            if(amount > user.Wallets.Single(x => x.CoinType.Abreviation == "EUR").CoinAmount)
+                                            if(amount > db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount)
                                             {
                                                 Console.WriteLine("You have typed in more than you have in your balance. Please try again!");
                                                 
@@ -70,7 +72,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             }
                                             else
                                             {
-                                                user.Wallets.Single(x => x.CoinType.Abreviation == "EUR").CoinAmount -= amount;
+                                                db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "EUR").CoinAmount -= amount;
                                                 UserPortofolioBusinessLogic.AddCopiedPortofolio(user, searchedUser, amount);
                                                 context.ShowBalance(user);
                                             }
@@ -81,9 +83,9 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                 }
                             case 2:
                                 {
-                                    if(user.Wallets.Any(x => x.CoinType.Abreviation == "USD"))
+                                    if(db.Wallets.Where(x => x.UserID == user.UserID).Any(x => x.CoinType.Abreviation == "USD"))
                                     {
-                                        if (user.Wallets.Single(x => x.CoinType.Abreviation == "USD").CoinAmount <= 0)
+                                        if (db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount <= 0)
                                         {
                                             Console.WriteLine("No USD available! Please try again!");
                                             PortofolioPercentageMenu(user, searchedUser);
@@ -93,7 +95,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             Console.WriteLine("Type in the amount of USD you want to invest:");
 
                                             double amount = Convert.ToDouble(Console.ReadLine());
-                                            if (amount > user.Wallets.Single(x => x.CoinType.Abreviation == "USD").CoinAmount)
+                                            if (amount > db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount)
                                             {
                                                 Console.WriteLine("You have typed in more than you have in your balance. Please try again!");
                                                 
@@ -101,7 +103,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                                             }
                                             else
                                             {
-                                                user.Wallets.Single(x => x.CoinType.Abreviation == "USD").CoinAmount -= amount;
+                                                db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == "USD").CoinAmount -= amount;
                                                 UserPortofolioBusinessLogic.AddCopiedPortofolio(user, searchedUser, amount);
                                                 context.ShowBalance(user);
                                             }

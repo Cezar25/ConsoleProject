@@ -29,6 +29,9 @@ namespace ConsoleProject.Domain
             Name = name;
             Abreviation = abreviation;
         }
+        #region Nav Properties 
+        public ICollection<TradeOffer> OffersSent { get; set; } = new List<TradeOffer>();
+        public ICollection<TradeOffer> OffersReceived { get; set; } = new List<TradeOffer>();
 
         public override bool Equals(object obj)
         {
@@ -37,15 +40,16 @@ namespace ConsoleProject.Domain
                    Abreviation == coin.Abreviation &&
                    ValueInEUR == coin.ValueInEUR &&
                    ValueInUSD == coin.ValueInUSD &&
-                   ValueInBTC == coin.ValueInBTC;
+                   ValueInBTC == coin.ValueInBTC &&
+                   CoinID.Equals(coin.CoinID) &&
+                   EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersSent, coin.OffersSent) &&
+                   EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersReceived, coin.OffersReceived);
         }
+
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return HashCode.Combine(Name, Abreviation, ValueInEUR, ValueInUSD, ValueInBTC, CoinID, OffersSent, OffersReceived);
         }
-        #region Nav Properties 
-        public ICollection<TradeOffer> OffersSent { get; set; } = new List<TradeOffer>();
-        public ICollection<TradeOffer> OffersReceived { get; set; } = new List<TradeOffer>();
         #endregion
     }
 }

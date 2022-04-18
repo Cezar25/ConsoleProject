@@ -18,11 +18,6 @@ namespace ConsoleProject.Domain
         public string SecurityQuestion { get; set; }
         public string SecurityAnswer { get; set; }
         public bool PrivateProfile { get; set; } = false;
-        public List<Wallet> Wallets { get; set; } = new List<Wallet>()
-        {
-            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "EUR").CoinID,0),
-            new Wallet(CoinDB.Coins.Single(x => x.Abreviation == "USD").CoinID,0)
-        };
         public User(string email, string password, int age, string securityQuestion, string securityAnswer)
         {
             Email = email;
@@ -50,7 +45,6 @@ namespace ConsoleProject.Domain
                    SecurityQuestion == user.SecurityQuestion &&
                    SecurityAnswer == user.SecurityAnswer &&
                    PrivateProfile == user.PrivateProfile &&
-                   EqualityComparer<List<Wallet>>.Default.Equals(Wallets, user.Wallets) &&
                    EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersSent, user.OffersSent) &&
                    EqualityComparer<ICollection<TradeOffer>>.Default.Equals(OffersReceived, user.OffersReceived);
         }
@@ -65,7 +59,6 @@ namespace ConsoleProject.Domain
             hash.Add(SecurityQuestion);
             hash.Add(SecurityAnswer);
             hash.Add(PrivateProfile);
-            hash.Add(Wallets);
             hash.Add(OffersSent);
             hash.Add(OffersReceived);
             return hash.ToHashCode();

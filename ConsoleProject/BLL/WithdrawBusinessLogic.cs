@@ -11,11 +11,13 @@ namespace ConsoleProject.BLL
     {
         public static void RemoveCoin(User user, string coinAbreviation, double amount)
         {
-            if (user.Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
+            var db = new CryptoAvenueContext();
+
+            if (db.Wallets.Where(x => x.UserID == user.UserID).Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
             {
-                if(user.Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount >= amount)
+                if(db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount >= amount)
                 {
-                    user.Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount -= amount;
+                    db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount -= amount;
                 }
                 else
                 {
@@ -26,6 +28,8 @@ namespace ConsoleProject.BLL
             {
                 Console.WriteLine("Coin could not be removed!");
             }
+
+            db.SaveChanges();
         }
     }
 }

@@ -12,8 +12,8 @@ namespace ConsoleProject.Domain
     {
         public DbSet<Coin> Coins { get; set; }
         public DbSet<User> Users { get; set; }
-
-        public DbSet<TradeOffer> Offers { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<TradeOffer> Offers { get; set; } 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

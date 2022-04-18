@@ -14,18 +14,15 @@ namespace ConsoleProject.BLL
         {
             var db = new CryptoAvenueContext();
 
-            var actualUser = db.Users.Where(x => x.Equals(user)).FirstOrDefault();
-
-            if (actualUser.Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
+            if (db.Wallets.Where(x => x.UserID == user.UserID).Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
             {
-                actualUser.Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount += amount;
-                //db.Update(actualUser);
+                db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount += amount;
             }
             else
             {
                 if (db.Coins.Any(x => x.Abreviation == coinAbreviation))
                 {
-                    actualUser.Wallets.Add(new Wallet(db.Coins.Single(x => x.Abreviation == coinAbreviation).CoinID, amount));
+                    db.Add(new Wallet() { CoinID = db.Coins.FirstOrDefault(x => x.Abreviation == coinAbreviation).CoinID, UserID = user.UserID, CoinAmount = amount });
                 }
             }
             db.SaveChanges();

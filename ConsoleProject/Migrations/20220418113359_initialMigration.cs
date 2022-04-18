@@ -84,28 +84,29 @@ namespace ConsoleProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Wallet",
+                name: "Wallets",
                 columns: table => new
                 {
                     WalletID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CoinAmount = table.Column<double>(type: "float", nullable: false),
                     CoinID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UserID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CoinAmount = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Wallet", x => x.WalletID);
+                    table.PrimaryKey("PK_Wallets", x => x.WalletID);
                     table.ForeignKey(
-                        name: "FK_Wallet_Coins_CoinID",
+                        name: "FK_Wallets_Coins_CoinID",
                         column: x => x.CoinID,
                         principalTable: "Coins",
                         principalColumn: "CoinID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Wallet_Users_UserID",
+                        name: "FK_Wallets_Users_UserID",
                         column: x => x.UserID,
                         principalTable: "Users",
-                        principalColumn: "UserID");
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -129,13 +130,13 @@ namespace ConsoleProject.Migrations
                 column: "SentCoinID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Wallet_CoinID",
-                table: "Wallet",
+                name: "IX_Wallets_CoinID",
+                table: "Wallets",
                 column: "CoinID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Wallet_UserID",
-                table: "Wallet",
+                name: "IX_Wallets_UserID",
+                table: "Wallets",
                 column: "UserID");
         }
 
@@ -145,7 +146,7 @@ namespace ConsoleProject.Migrations
                 name: "Offers");
 
             migrationBuilder.DropTable(
-                name: "Wallet");
+                name: "Wallets");
 
             migrationBuilder.DropTable(
                 name: "Coins");

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleProject.Migrations
 {
     [DbContext(typeof(CryptoAvenueContext))]
-    [Migration("20220414202414_initialMigration")]
+    [Migration("20220418113359_initialMigration")]
     partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,7 +128,7 @@ namespace ConsoleProject.Migrations
                     b.Property<Guid>("CoinID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("UserID")
+                    b.Property<Guid>("UserID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("WalletID");
@@ -137,7 +137,7 @@ namespace ConsoleProject.Migrations
 
                     b.HasIndex("UserID");
 
-                    b.ToTable("Wallet");
+                    b.ToTable("Wallets");
                 });
 
             modelBuilder.Entity("ConsoleProject.Domain.TradeOffer", b =>
@@ -183,11 +183,15 @@ namespace ConsoleProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ConsoleProject.Domain.User", null)
-                        .WithMany("Wallets")
-                        .HasForeignKey("UserID");
+                    b.HasOne("ConsoleProject.Domain.User", "WalletOwner")
+                        .WithMany()
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CoinType");
+
+                    b.Navigation("WalletOwner");
                 });
 
             modelBuilder.Entity("ConsoleProject.Domain.Coin", b =>
@@ -202,8 +206,6 @@ namespace ConsoleProject.Migrations
                     b.Navigation("OffersReceived");
 
                     b.Navigation("OffersSent");
-
-                    b.Navigation("Wallets");
                 });
 #pragma warning restore 612, 618
         }

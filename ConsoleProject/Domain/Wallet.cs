@@ -10,20 +10,22 @@ namespace ConsoleProject.Domain
 {
     public class Wallet
     {
-        public Coin CoinType { get; set; }
-        public double CoinAmount { get; set; }
         public Guid WalletID { get; set; } = Guid.NewGuid();
         public Guid CoinID { get; set; }
-
-        public Wallet(Guid coinID, double coinAmount)
-        {
-            CoinID = coinID;
-            if (CoinDB.Coins.Any(x => x.CoinID == coinID))
-            {
-                CoinType = CoinDB.Coins.SingleOrDefault(x => x.CoinID == coinID);
-            }
-            CoinAmount = coinAmount;
-        }
+        public Coin CoinType { get; set; }
+        public Guid UserID { get; set; }
+        public User WalletOwner { get; set; }
+        public double CoinAmount { get; set; }
+        
+        //public Wallet(Guid coinID, double coinAmount)
+        //{
+        //    CoinID = coinID;
+        //    if (CoinDB.Coins.Any(x => x.CoinID == coinID))
+        //    {
+        //        CoinType = CoinDB.Coins.SingleOrDefault(x => x.CoinID == coinID);
+        //    }
+        //    CoinAmount = coinAmount;
+        //}
     }
 
 }

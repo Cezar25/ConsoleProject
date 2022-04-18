@@ -11,38 +11,42 @@ namespace ConsoleProject.BLL
     {
         public static void ApplyTrade(TradeOffer offer)
         {
-            if(offer.Sender.Wallets.Any(x => x.CoinType == offer.ReceivedCoin) && offer.Recipient.Wallets.Any(x => x.CoinType == offer.SentCoin))
-            {
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount += offer.ReceivedAmount;
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount += offer.SentAmount;
+            var db = new CryptoAvenueContext();
 
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
+            if(db.Wallets.Where(x => x.UserID == offer.Sender.UserID).Any(x => x.CoinType == offer.ReceivedCoin) && db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).Any(x => x.CoinType == offer.SentCoin))
+            {
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount += offer.ReceivedAmount;
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount += offer.SentAmount;
+
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
             }
-            else if ( !offer.Sender.Wallets.Any(x => x.CoinType == offer.ReceivedCoin) && offer.Recipient.Wallets.Any(x => x.CoinType == offer.SentCoin))
+            else if ( !db.Wallets.Where(x => x.UserID == offer.Sender.UserID).Any(x => x.CoinType == offer.ReceivedCoin) && db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).Any(x => x.CoinType == offer.SentCoin))
             {
-                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin.CoinID, offer.ReceivedAmount));
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount += offer.SentAmount;
+                db.Wallets.Add(new Wallet() { CoinID = offer.ReceivedCoin.CoinID, UserID = offer.Sender.UserID, CoinAmount = offer.ReceivedAmount });
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount += offer.SentAmount;
 
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
             }
-            else if (offer.Sender.Wallets.Any(x => x.CoinType == offer.ReceivedCoin) && !offer.Recipient.Wallets.Any(x => x.CoinType == offer.SentCoin))
+            else if (db.Wallets.Where(x => x.UserID == offer.Sender.UserID).Any(x => x.CoinType == offer.ReceivedCoin) && !db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).Any(x => x.CoinType == offer.SentCoin))
             {
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount += offer.ReceivedAmount;
-                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin.CoinID, offer.SentAmount));
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount += offer.ReceivedAmount;
+                db.Wallets.Add(new Wallet() { CoinID = offer.SentCoin.CoinID,UserID = offer.Recipient.UserID, CoinAmount = offer.SentAmount });
 
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
             }
             else
             {
-                offer.Sender.Wallets.Add(new Wallet(offer.ReceivedCoin.CoinID, offer.ReceivedAmount));
-                offer.Recipient.Wallets.Add(new Wallet(offer.SentCoin.CoinID, offer.SentAmount));
+                db.Wallets.Add(new Wallet() { CoinID = offer.ReceivedCoin.CoinID,UserID = offer.Sender.UserID, CoinAmount =  offer.ReceivedAmount });
+                db.Wallets.Add(new Wallet() { CoinID = offer.SentCoin.CoinID, UserID = offer.Recipient.UserID, CoinAmount = offer.SentAmount });
 
-                offer.Sender.Wallets.Single(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
-                offer.Recipient.Wallets.Single(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
+                db.Wallets.Where(x => x.UserID == offer.Sender.UserID).FirstOrDefault(x => x.CoinType == offer.SentCoin).CoinAmount -= offer.SentAmount;
+                db.Wallets.Where(x => x.UserID == offer.Recipient.UserID).FirstOrDefault(x => x.CoinType == offer.ReceivedCoin).CoinAmount -= offer.ReceivedAmount;
             }
+
+            db.SaveChanges();
         }
     }
 }

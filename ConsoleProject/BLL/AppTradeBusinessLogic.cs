@@ -12,6 +12,8 @@ namespace ConsoleProject.BLL
     {
         public static void ConvertCoinToCoin(User user, Wallet wallet, double amountOfCoinSold, string boughtCoinAbreviation)
         {
+            var db = new CryptoAvenueContext();
+
             amountOfCoinSold = Math.Round(amountOfCoinSold,3);
             if(amountOfCoinSold > wallet.CoinAmount)
             {
@@ -21,21 +23,23 @@ namespace ConsoleProject.BLL
 
             double amountOfCoinSoldInEUR = amountOfCoinSold * wallet.CoinType.ValueInEUR;
 
-            if (user.Wallets.Any(x => x.CoinType.Abreviation == boughtCoinAbreviation))
+            if (db.Wallets.Where(x => x.UserID == user.UserID).Any(x => x.CoinType.Abreviation == boughtCoinAbreviation))
             {
-                double amountOfCoinBought = amountOfCoinSoldInEUR / user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInEUR;
-                user.Wallets.Single(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinAmount += amountOfCoinBought;
+                double amountOfCoinBought = amountOfCoinSoldInEUR / db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinType.ValueInEUR;
+                db.Wallets.Where(x => x.UserID == user.UserID).FirstOrDefault(x => x.CoinType.Abreviation == boughtCoinAbreviation).CoinAmount += amountOfCoinBought;
             }
             else
             {
                 if(CoinDB.Coins.Any(x => x.Abreviation == boughtCoinAbreviation))
                 {
-                    double amountOfCoinBought = amountOfCoinSoldInEUR / CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
-                    user.Wallets.Add(new Wallet(CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).CoinID, amountOfCoinBought));
+                    double amountOfCoinBought = amountOfCoinSoldInEUR / CoinDB.Coins.FirstOrDefault(x => x.Abreviation == boughtCoinAbreviation).ValueInEUR;
+                    db.Wallets.Add(new Wallet() { CoinID = CoinDB.Coins.Single(x => x.Abreviation == boughtCoinAbreviation).CoinID,UserID = user.UserID, CoinAmount =  amountOfCoinBought });
                 }
             }
 
             wallet.CoinAmount -= amountOfCoinSold;
+
+            db.SaveChanges();
 
         }
         public static double GetBoughtCoinAmount(double soldCoinAmount, string soldCoinAbreviation, string boughtCoinAbreviation)

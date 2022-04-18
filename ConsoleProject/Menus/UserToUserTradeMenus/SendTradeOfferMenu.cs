@@ -14,13 +14,15 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
     {
         public static void SendTradeOffer(User sender, User recipient)
         {
+            var db =  new CryptoAvenueContext();
+
             var context = new ShowBalanceContext();
             context.SetStrategy(new ShownBalanceStrategy());
 
             Console.WriteLine("Choose which coin you wish to buy from the user:");
             int boughtIndex = 0;
 
-            foreach (var coin in recipient.Wallets)
+            foreach (var coin in db.Wallets.Where(x => x.UserID == recipient.UserID))
             {
                     Console.WriteLine($"Press {boughtIndex} for {coin.CoinType.Abreviation}.");
                     boughtIndex++;    
@@ -35,11 +37,11 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
             }
             else
             {
-                Console.WriteLine($"Please type in the amount of {recipient.Wallets[choice].CoinType.Abreviation} you wish to buy from the user   (amount available: {recipient.Wallets[choice].CoinAmount})");
-                Console.WriteLine($"Selected coin: {recipient.Wallets[choice].CoinType.Abreviation}");
+                Console.WriteLine($"Please type in the amount of {db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation} you wish to buy from the user   (amount available: {db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinAmount})");
+                Console.WriteLine($"Selected coin: {db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation}");
                 double boughtAmount = Convert.ToDouble(Console.ReadLine());
 
-                if(boughtAmount < 0 || boughtAmount > recipient.Wallets[choice].CoinAmount)
+                if(boughtAmount < 0 || boughtAmount > db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinAmount)
                 {
                     Console.WriteLine("Wrong choice! Please try again!");
                     SendTradeOffer(sender, recipient);
@@ -48,7 +50,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                 {
                     Console.WriteLine("Please select the coin you wish to sell from your portofolio:");
                     int soldIndex = 0;
-                    foreach (var coin in sender.Wallets)
+                    foreach (var coin in db.Wallets.Where(x => x.UserID == sender.UserID))
                     {
                 
                             Console.WriteLine($"Press {soldIndex} for {coin.CoinType.Abreviation}.");
@@ -65,16 +67,16 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                     }
                     else
                     {
-                        Console.WriteLine($"Buying {boughtAmount} {recipient.Wallets[choice].CoinType.Abreviation} worth {AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation)} {sender.Wallets[choice2].CoinType.Abreviation} ");
-                        AppTradeBusinessLogic.GetConversionRate(sender.Wallets[choice2].CoinType.Abreviation, recipient.Wallets[choice].CoinType.Abreviation);
+                        Console.WriteLine($"Buying {boughtAmount} {db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation} worth {AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation, db.Wallets.Where(x => x.UserID == sender.UserID).ToList()[choice2].CoinType.Abreviation)} {db.Wallets.Where(x => x.UserID == sender.UserID).ToList()[choice2].CoinType.Abreviation} ");
+                        AppTradeBusinessLogic.GetConversionRate(db.Wallets.Where(x => x.UserID == sender.UserID).ToList()[choice2].CoinType.Abreviation, db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation);
 
                         DBContext.Offers.Add(new TradeOffer
                         {
                             SenderID = sender.UserID,
                             RecipientID = recipient.UserID,
-                            SentCoinID = sender.Wallets[choice2].CoinType.CoinID,
-                            SentAmount = AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, recipient.Wallets[choice].CoinType.Abreviation, sender.Wallets[choice2].CoinType.Abreviation),
-                            ReceivedCoinID = recipient.Wallets[choice].CoinType.CoinID,
+                            SentCoinID = db.Wallets.Where(x => x.UserID == sender.UserID).ToList()[choice2].CoinType.CoinID,
+                            SentAmount = AppTradeBusinessLogic.GetSoldCoinAmount(boughtAmount, db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.Abreviation, db.Wallets.Where(x => x.UserID == sender.UserID).ToList()[choice2].CoinType.Abreviation),
+                            ReceivedCoinID = db.Wallets.Where(x => x.UserID == recipient.UserID).ToList()[choice].CoinType.CoinID,
                             ReceivedAmount = boughtAmount
                         });
 
@@ -82,6 +84,7 @@ namespace ConsoleProject.Menus.UserToUserTradeMenus
                     }
                 }
             }
+            db.SaveChanges();
         }
     }
 }
