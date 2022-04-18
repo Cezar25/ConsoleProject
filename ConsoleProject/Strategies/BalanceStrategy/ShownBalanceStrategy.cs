@@ -22,13 +22,17 @@ namespace ConsoleProject.StrategyPatterm
             Console.WriteLine();
             Console.WriteLine("BALANCE PAGE");
 
-            Console.WriteLine($"Welcome {user.Email}!");
-            Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(user), 3)} EUR");
-            AccountBusinessLogic.DisplayPrivacy(user);
+            var db = new CryptoAvenueContext();
+
+            var actualUser = db.Users.Where(x => x.Equals(user)).FirstOrDefault();
+
+            Console.WriteLine($"Welcome {actualUser.Email}!");
+            Console.WriteLine($"Your total balance amount is:    {Math.Round(UserPortofolioBusinessLogic.GetTotalPortofolioValueInEUR(actualUser), 3)} EUR");
+            AccountBusinessLogic.DisplayPrivacy(actualUser);
 
             Console.WriteLine();
             Console.WriteLine("Below you have a list of all the coins in your portofolio");
-            UserPortofolioBusinessLogic.DisplayPortofolio(user);
+            UserPortofolioBusinessLogic.DisplayPortofolio(actualUser);
 
             Console.WriteLine("\nWhat do you wish to do now?");
             Console.WriteLine("Press 1 for depositing money.");
@@ -47,19 +51,19 @@ namespace ConsoleProject.StrategyPatterm
             {
                 case 1:
                     {
-                        GetCreditCardInfoMenu.GetCreditCardInfo(user);
+                        GetCreditCardInfoMenu.GetCreditCardInfo(actualUser);
 
                         break;
                     }
                 case 2:
                     {
-                        GetBankAccountInfoMenu.GetBankAccountInfo(user);
+                        GetBankAccountInfoMenu.GetBankAccountInfo(actualUser);
 
                         break;
                     }
                 case 3:
                     {
-                        EditProfileMenu.EditProfile(user);
+                        EditProfileMenu.EditProfile(actualUser);
 
                         break;
                     }
@@ -67,29 +71,29 @@ namespace ConsoleProject.StrategyPatterm
                     {
                         var context = new ShowBalanceContext();
                         context.SetStrategy(new HiddenBalanceStrategy());
-                        context.ShowBalance(user);
+                        context.ShowBalance(actualUser);
 
                         break;
                     }
                 case 5:
                     {
-                        AccountBusinessLogic.ChangeProfileType(user);
-                        ShowBalance(user);
+                        AccountBusinessLogic.ChangeProfileType(actualUser);
+                        ShowBalance(actualUser);
                         break;
                     }
                 case 6:
                     {
-                        TradeWithAppMenu.TradeWithApp(user);
+                        TradeWithAppMenu.TradeWithApp(actualUser);
                         break;
                     }
                 case 7:
                     {
-                        SearchForUserMenu.SearchForOtherUser(user);
+                        SearchForUserMenu.SearchForOtherUser(actualUser);
                         break;
                     }
                 case 8:
                     {
-                        NotificationsMenu.ShowNotifications(user);
+                        NotificationsMenu.ShowNotifications(actualUser);
                         break;
                     }
                 case 9:
@@ -101,7 +105,7 @@ namespace ConsoleProject.StrategyPatterm
                 default:
                     {
                         Console.WriteLine("Wrong choice, please try again!");
-                        ShowBalance(user);
+                        ShowBalance(actualUser);
                         break;
                     }
             }

@@ -19,6 +19,7 @@ namespace ConsoleProject.BLL
             if (actualUser.Wallets.Any(x => x.CoinType.Abreviation == coinAbreviation))  //Check if there is a wallet coitaining the inserted coin type
             {
                 actualUser.Wallets.Single(x => x.CoinType.Abreviation == coinAbreviation).CoinAmount += amount;
+                //db.Update(actualUser);
             }
             else
             {

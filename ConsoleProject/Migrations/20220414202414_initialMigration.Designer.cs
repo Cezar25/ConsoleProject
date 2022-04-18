@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConsoleProject.Migrations
 {
     [DbContext(typeof(CryptoAvenueContext))]
-    [Migration("20220414105143_initialMigration")]
+    [Migration("20220414202414_initialMigration")]
     partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

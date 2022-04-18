@@ -10,7 +10,7 @@ namespace ConsoleProject.Domain
 {
     public class Wallet
     {
-        public Coin? CoinType { get; set; }
+        public Coin CoinType { get; set; }
         public double CoinAmount { get; set; }
         public Guid WalletID { get; set; } = Guid.NewGuid();
         public Guid CoinID { get; set; }
